@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import Signup from './Signup';
 import logo from './logo.svg';
 import './App.css';
 
-class App extends Component {
+export default class App extends Component {
   render() {
     return (
       <div className="App">
@@ -20,9 +21,10 @@ class App extends Component {
             Learn React
           </a>
         </header>
+        <main>
+          <Signup />
+        </main>
       </div>
     );
   }
 }
-
-export default App;
