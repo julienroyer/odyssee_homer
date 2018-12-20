@@ -22,7 +22,7 @@ export default class App extends Component {
           </a>
         </header>
         <main>
-          <Signup />
+          <Signup email="test@test.com" />
         </main>
       </div>
     );
