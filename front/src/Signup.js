@@ -10,21 +10,27 @@ export default class Signup extends Component {
         this.setState({ [e.target.name]: e.target.value });
     }
 
+    onSubmit(e) {
+        console.log("onSubmit", this.state);
+        e.preventDefault();
+    }
+
     render() {
+        const onInput = this.onInput.bind(this);
         return (
-            <form>
+            <form onSubmit={this.onSubmit.bind(this)}>
                 <h1>Inscription : {JSON.stringify(this.state, undefined, 1)}</h1>
 
                 <p><input name="email" type="email" autoComplete="username" defaultValue={this.props.email}
-                    onInput={e => this.onInput(e)} /></p>
+                    onInput={onInput} /></p>
                 <p><input name="password" type="password" autoComplete="new-password"
-                    onInput={e => this.onInput(e)} /></p>
+                    onInput={onInput} /></p>
                 <p><input name="passwordbis" type="password" autoComplete="new-password"
-                    onInput={e => this.onInput(e)} /></p>
+                    onInput={onInput} /></p>
                 <p><input name="name"
-                    onInput={e => this.onInput(e)} /></p>
+                    onInput={onInput} /></p>
                 <p><input name="lastname"
-                    onInput={e => this.onInput(e)} /></p>
+                    onInput={onInput} /></p>
                 <p><input type="submit" value="Soumettre" /></p>
             </form>
         );
