@@ -11,7 +11,7 @@ export default class Signup extends Component {
     render() {
         return (
             <form onInput={this.onInput} onSubmit={this.onSubmit}>
-                <h1>Signup: {JSON.stringify(this.state, 1, 1)}</h1>
+                <h1>Signup: {JSON.stringify(this.state, undefined, 1)}</h1>
 
                 <p><label>Email<br /><input name="email" type="email" autoComplete="username" /></label></p>
                 <p><label>Password<br /><input name="password" type="password" autoComplete="new-password" /></label></p>
