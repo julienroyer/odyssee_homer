@@ -6,9 +6,9 @@ const router = express.Router();
 router.post('/signup', (req, res) => {
     connection.query('INSERT INTO users SET ?', req.body, error => {
         if (error) {
-            res.status(500).send(error).end();
+            res.status(500).json({ flash: error.message }).end();
         } else {
-            res.end();
+            res.json({ flash: 'User has been signed up!' }).end();
         }
     });
 });
