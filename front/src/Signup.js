@@ -7,8 +7,8 @@ export default class Signup extends Component {
     }
 
     onSubmit(e) {
-        console.log('Signup', this.state);
         e.preventDefault();
+        console.log('Signup', this.state);
     }
 
     render() {
