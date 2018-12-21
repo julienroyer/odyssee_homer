@@ -1,22 +1,18 @@
 import React, { Component } from 'react';
 
 export default class Signup extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {};
-    }
-
     onInput = e => (t => this.setState({ [t.name]: t.value }))(e.target);
 
     onSubmit = e => {
         e.preventDefault();
+        const { flash, ...fields } = this.state || {};
         fetch("/auth/signup",
             {
                 method: 'POST',
                 headers: new Headers({
                     'Content-Type': 'application/json'
                 }),
-                body: JSON.stringify(this.state),
+                body: JSON.stringify(fields),
             })
             .then(res => res.json())
             .then(
@@ -26,11 +22,12 @@ export default class Signup extends Component {
     };
 
     render() {
+        const { flash, ...fields } = this.state || {};
         return (
             <form onInput={this.onInput} onSubmit={this.onSubmit}>
-                <h1>Signup: {JSON.stringify(this.state, undefined, 1)}</h1>
+                <h1>Signup: {JSON.stringify(fields, undefined, 1)}</h1>
 
-                <p>Flash: {this.state.flash || ""}</p>
+                <p>Flash: {flash || ""}</p>
 
                 <p><label>Email<br /><input name="email" type="email" autoComplete="username" /></label></p>
                 <p><label>Password<br /><input name="password" type="password" autoComplete="new-password" /></label></p>
