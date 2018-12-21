@@ -1,36 +1,26 @@
 import React, { Component } from 'react';
 
 export default class Signup extends Component {
-    constructor(props) {
-        super(props);
-        this.state = { ...props };
-    }
-
     onInput(e) {
-        this.setState({ [e.target.name]: e.target.value });
+        const t = e.target;
+        this.setState({ [t.name]: t.value });
     }
 
     onSubmit(e) {
-        console.log("onSubmit", this.state);
+        console.log('Signup', this.state);
         e.preventDefault();
     }
 
     render() {
-        const onInput = this.onInput.bind(this);
         return (
-            <form onSubmit={this.onSubmit.bind(this)}>
-                <h1>Inscription : {JSON.stringify(this.state, undefined, 1)}</h1>
+            <form onInput={e => this.onInput(e)} onSubmit={e => this.onSubmit(e)}>
+                <h1>Signup: {JSON.stringify(this.state, undefined, 1)}</h1>
 
-                <p><input name="email" type="email" autoComplete="username" defaultValue={this.props.email}
-                    onInput={onInput} /></p>
-                <p><input name="password" type="password" autoComplete="new-password"
-                    onInput={onInput} /></p>
-                <p><input name="passwordbis" type="password" autoComplete="new-password"
-                    onInput={onInput} /></p>
-                <p><input name="name"
-                    onInput={onInput} /></p>
-                <p><input name="lastname"
-                    onInput={onInput} /></p>
+                <p><input name="email" type="email" autoComplete="username" /></p>
+                <p><input name="password" type="password" autoComplete="new-password" /></p>
+                <p><input name="passwordbis" type="password" autoComplete="new-password" /></p>
+                <p><input name="name" /></p>
+                <p><input name="lastname" /></p>
                 <p><input type="submit" value="Soumettre" /></p>
             </form>
         );
