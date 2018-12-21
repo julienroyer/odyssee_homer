@@ -16,12 +16,12 @@ export default class Signup extends Component {
             <form onInput={e => this.onInput(e)} onSubmit={e => this.onSubmit(e)}>
                 <h1>Signup: {JSON.stringify(this.state, undefined, 1)}</h1>
 
-                <p><input name="email" type="email" autoComplete="username" /></p>
-                <p><input name="password" type="password" autoComplete="new-password" /></p>
-                <p><input name="passwordbis" type="password" autoComplete="new-password" /></p>
-                <p><input name="name" /></p>
-                <p><input name="lastname" /></p>
-                <p><input type="submit" value="Soumettre" /></p>
+                <p><label>Email<br /><input name="email" type="email" autoComplete="username" /></label></p>
+                <p><label>Password<br /><input name="password" type="password" autoComplete="new-password" /></label></p>
+                <p><label>Password bis<br /><input name="passwordbis" type="password" autoComplete="new-password" /></label></p>
+                <p><label>Name<br /><input name="name" /></label></p>
+                <p><label>Last name<br /><input name="lastname" /></label></p>
+                <p><input type="submit" value="Submit" /></p>
             </form>
         );
     }
