@@ -10,7 +10,7 @@ export default class Signup extends Component {
         return (
             <div>
                 <h1>{this.state.email}</h1>
-                <input type="email" defaultValue={this.props.email} onInput={e => this.setState({ email: e.target.value })} />
+                <input type="email" name="email" defaultValue={this.props.email} onInput={e => this.setState({ email: e.target.value })} />
             </div>
         );
     }
