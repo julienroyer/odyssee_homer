@@ -1,20 +1,17 @@
 import React, { Component } from 'react';
 
 export default class Signup extends Component {
-    onInput(e) {
-        const t = e.target;
-        this.setState({ [t.name]: t.value });
-    }
+    onInput = e => (t => this.setState({ [t.name]: t.value }))(e.target);
 
-    onSubmit(e) {
+    onSubmit = e => {
         e.preventDefault();
         console.log('Signup', this.state);
     }
 
     render() {
         return (
-            <form onInput={e => this.onInput(e)} onSubmit={e => this.onSubmit(e)}>
-                <h1>Signup: {JSON.stringify(this.state, undefined, 1)}</h1>
+            <form onInput={this.onInput} onSubmit={this.onSubmit}>
+                <h1>Signup: {JSON.stringify(this.state, 1, 1)}</h1>
 
                 <p><label>Email<br /><input name="email" type="email" autoComplete="username" /></label></p>
                 <p><label>Password<br /><input name="password" type="password" autoComplete="new-password" /></label></p>
