@@ -1,6 +1,7 @@
 const bodyParser = require('body-parser');
 const express = require('express');
 const morgan = require('morgan');
+const authRouter = require('./routes/auth');
 
 const app = express();
 
@@ -12,6 +13,8 @@ app.use(express.static(__dirname + '/public'));
 app.get("/", (_req, res) => {
     res.send("youhou");
 });
+
+app.use('/auth', authRouter);
 
 app.use((_req, _res, next) => {
     const err = new Error('Not Found');
