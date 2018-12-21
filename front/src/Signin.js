@@ -25,7 +25,7 @@ export default class Signin extends Component {
         const { flash, ...fields } = this.state || {};
         return (
             <form onInput={this.onInput} onSubmit={this.onSubmit}>
-                <h1>Signup: {JSON.stringify(fields, undefined, 1)}</h1>
+                <h1>Signin: {JSON.stringify(fields, undefined, 1)}</h1>
 
                 <p>Flash: {flash || ""}</p>
 

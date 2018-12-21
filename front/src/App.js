@@ -1,4 +1,4 @@
 import React from 'react';
-import Signup from './Signup';
+import Signin from './Signin';
 
-export default () => <Signup />;
+export default () => <Signin />;
