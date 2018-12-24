@@ -15,8 +15,8 @@ export default class Signin extends Component {
                 body: JSON.stringify(fields),
             })
             .then(res => res.json())
-            .then(res => this.setState({ flash: res.ok ? res.flash || 'OK' : `KO HTTP ${status}` }))
-            .catch(err => this.setState({ flash: err || 'KO' }));
+            .then(res => this.setState({ flash: res.ok ? res.flash || 'OK' : `KO HTTP ${res.status}` }))
+            .catch(err => this.setState({ flash: String(err) || 'KO' }));
     };
 
     render() {
