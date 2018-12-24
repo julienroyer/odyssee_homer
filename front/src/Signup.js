@@ -16,9 +16,10 @@ export default class Signup extends Component {
             })
             .then(res => res.json())
             .then(
-                res => this.setState({ flash: res.flash }),
-                err => this.setState({ flash: err.flash })
-            );
+                res => this.setState({ flash: res.flash || 'OK' }),
+                err => this.setState({ flash: err.flash || 'KO' })
+            )
+            .catch(err => this.setState({ flash: err || 'KO' }));
     };
 
     render() {
@@ -27,7 +28,7 @@ export default class Signup extends Component {
             <form onInput={this.onInput} onSubmit={this.onSubmit}>
                 <h1>Signup: {JSON.stringify(fields, undefined, 1)}</h1>
 
-                <p>Flash: {flash || ""}</p>
+                {flash ? <p>Flash: {flash}</p> : ''}
 
                 <p><label>Email<br /><input name="email" type="email" autoComplete="username" /></label></p>
                 <p><label>Password<br /><input name="password" type="password" autoComplete="new-password" /></label></p>
