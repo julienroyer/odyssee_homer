@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
 
 export default class Signin extends Component {
-    onInput = e => (t => this.setState({ [t.name]: t.value }))(e.target);
+    constructor(props) {
+        super(props);
+        this.state = {flash: '', fields: {}};
+    }
+
+    onInput = e => (t => this.setState({ fields: { ...this.state.fields, [t.name]: t.value } }))(e.target);
 
     onSubmit = e => {
         e.preventDefault();
-        const { flash, ...fields } = this.state || {};
+        const { fields } = this.state;
         fetch("/auth/signin",
             {
                 method: 'POST',
@@ -20,7 +25,7 @@ export default class Signin extends Component {
     };
 
     render() {
-        const { flash, ...fields } = this.state || {};
+        const { flash, fields } = this.state || {};
         return (
             <form onInput={this.onInput} onSubmit={this.onSubmit}>
                 <h1>Signin: {JSON.stringify(fields, undefined, 1)}</h1>

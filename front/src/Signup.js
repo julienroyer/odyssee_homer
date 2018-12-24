@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
 
 export default class Signup extends Component {
-    onInput = e => (t => this.setState({ [t.name]: t.value }))(e.target);
+    constructor(props) {
+        super(props);
+        this.state = {flash: '', fields: {}};
+    }
+
+    onInput = e => (t => this.setState({ fields: { ...this.state.fields, [t.name]: t.value } }))(e.target);
 
     onSubmit = e => {
         e.preventDefault();
-        const { flash, ...fields } = this.state || {};
+        const { fields } = this.state;
         fetch("/auth/signup",
             {
                 method: 'POST',
@@ -15,11 +20,8 @@ export default class Signup extends Component {
                 body: JSON.stringify(fields),
             })
             .then(res => res.json())
-            .then(
-                res => this.setState({ flash: res.flash || 'OK' }),
-                err => this.setState({ flash: err.flash || 'KO' })
-            )
-            .catch(err => this.setState({ flash: err || 'KO' }));
+            .then(res => this.setState({ flash: res.ok ? res.flash || 'OK' : `KO HTTP ${res.status}` }))
+            .catch(err => this.setState({ flash: String(err) || 'KO' }));
     };
 
     render() {
