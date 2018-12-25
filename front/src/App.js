@@ -1,4 +1,15 @@
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import React from 'react';
 import Profile from './Profile';
+import Signin from './Signin';
+import Signup from './Signup';
 
-export default () => <Profile />;
+export default () => (
+    <BrowserRouter>
+        <Switch>
+            <Route path={['/', '/signin']} component={Signin} />
+            <Route path="/profile" component={Profile} />
+            <Route path="/signup" component={Signup} />
+        </Switch>
+    </BrowserRouter>
+);
