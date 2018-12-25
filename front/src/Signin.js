@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 export default class Signin extends Component {
     constructor(props) {
         super(props);
-        this.state = {flash: '', fields: {}};
+        this.state = { flash: '', fields: {} };
     }
 
     onInput = e => (t => this.setState({ fields: { ...this.state.fields, [t.name]: t.value } }))(e.target);
@@ -18,15 +18,11 @@ export default class Signin extends Component {
                     'Content-Type': 'application/json',
                 }),
                 body: JSON.stringify(fields),
-            })
-            .then(res => {
-                if (!res.ok) {
-                    throw Error(`unable to call server (HTTP status ${res.status})`);
-                }
-                return res.json();
-            })
-            .then(res => this.setState({ flash: res.flash || 'OK' }))
-            .catch(err => this.setState({ flash: err.message || 'KO' }));
+            }
+        ).then(res => res.json().then(
+            res => this.setState({ flash: res.flash || 'OK' }),
+            () => this.setState({ flash: `request failure (HTTP ${res.status})` }))
+        ).catch(err => this.setState({ flash: `request failure (${err.message})` }));
     };
 
     render() {
@@ -35,7 +31,7 @@ export default class Signin extends Component {
             <form onChange={this.onInput} onSubmit={this.onSubmit}>
                 <h1>Signin: {JSON.stringify(fields, undefined, 1)}</h1>
 
-                {flash ? <p>Flash: {flash}</p> : ''}
+                {flash ? <p style={{background: 'yellow'}}>{flash}</p> : ''}
 
                 <p><label>Email<br /><input name="email" type="email" autoComplete="username" /></label></p>
                 <p><label>Password<br /><input name="password" type="password" autoComplete="current-password" /></label></p>

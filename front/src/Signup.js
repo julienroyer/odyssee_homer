@@ -18,15 +18,11 @@ export default class Signup extends Component {
                     'Content-Type': 'application/json',
                 }),
                 body: JSON.stringify(fields),
-            })
-            .then(res => {
-                if (!res.ok) {
-                    throw Error(`unable to call server (HTTP status ${res.status})`);
-                }
-                return res.json();
-            })
-            .then(res => this.setState({ flash: res.flash || 'OK' }))
-            .catch(err => this.setState({ flash: err.message || 'KO' }));
+            }
+        ).then(res => res.json().then(
+            res => this.setState({ flash: res.flash || 'OK' }),
+            () => this.setState({ flash: `request failure (HTTP ${res.status})` }))
+        ).catch(err => this.setState({ flash: `request failure (${err.message})` }));
     };
 
     render() {
@@ -35,7 +31,7 @@ export default class Signup extends Component {
             <form onChange={this.onInput} onSubmit={this.onSubmit}>
                 <h1>Signup: {JSON.stringify(fields, undefined, 1)}</h1>
 
-                {flash ? <p>Flash: {flash}</p> : ''}
+                {flash ? <p style={{background: 'yellow'}}>{flash}</p> : ''}
 
                 <p><label>Email<br /><input name="email" type="email" autoComplete="username" /></label></p>
                 <p><label>Password<br /><input name="password" type="password" autoComplete="new-password" /></label></p>
