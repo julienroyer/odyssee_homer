@@ -7,7 +7,8 @@ import Signup from './Signup';
 export default () => (
     <BrowserRouter>
         <Switch>
-            <Route path={['/', '/signin']} component={Signin} />
+            <Route path="/" exact component={Signin} />
+            <Route path="/signin" component={Signin} />
             <Route path="/profile" component={Profile} />
             <Route path="/signup" component={Signup} />
         </Switch>
