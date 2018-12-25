@@ -10,24 +10,29 @@ export default class Signin extends Component {
 
     onSubmit = e => {
         e.preventDefault();
-        const { fields } = this.state;
+        const { fields, } = this.state;
         fetch("/auth/signin",
             {
                 method: 'POST',
                 headers: new Headers({
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
                 }),
                 body: JSON.stringify(fields),
             })
-            .then(res => res.json())
-            .then(res => this.setState({ flash: res.ok ? res.flash || 'OK' : `KO HTTP ${res.status}` }))
-            .catch(err => this.setState({ flash: String(err) || 'KO' }));
+            .then(res => {
+                if (!res.ok) {
+                    throw Error(`unable to call server (HTTP status ${res.status})`);
+                }
+                return res.json();
+            })
+            .then(res => this.setState({ flash: res.flash || 'OK' }))
+            .catch(err => this.setState({ flash: err.message || 'KO' }));
     };
 
     render() {
         const { flash, fields, } = this.state;
         return (
-            <form onInput={this.onInput} onSubmit={this.onSubmit}>
+            <form onChange={this.onInput} onSubmit={this.onSubmit}>
                 <h1>Signin: {JSON.stringify(fields, undefined, 1)}</h1>
 
                 {flash ? <p>Flash: {flash}</p> : ''}
