@@ -1,4 +1,4 @@
 import React from 'react';
-import Signup from './Signup';
+import Profile from './Profile';
 
-export default () => <Signup />;
+export default () => <Profile />;
