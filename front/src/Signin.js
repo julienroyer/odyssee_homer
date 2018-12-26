@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 export default class Signin extends Component {
     constructor(props) {
         super(props);
-        this.state = { flash: '', fields: {} };
+        this.state = { flash: '', fields: {}, };
     }
 
     onInput = e => (t => this.setState({ fields: { ...this.state.fields, [t.name]: t.value } }))(e.target);
