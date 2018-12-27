@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 export default class Signup extends Component {
     constructor(props) {
         super(props);
-        this.state = {flash: '', fields: {}, };
+        this.state = { flash: '', fields: {}, };
     }
 
     onInput = e => (t => this.setState({ fields: { ...this.state.fields, [t.name]: t.value } }))(e.target);
@@ -21,8 +21,8 @@ export default class Signup extends Component {
             }
         ).then(res => res.json().then(
             res => this.setState({ flash: res.flash || 'OK' }),
-            () => this.setState({ flash: `request failure (HTTP ${res.status})` }))
-        ).catch(err => this.setState({ flash: `request failure (${err.message})` }));
+            () => this.setState({ flash: `Request failure (HTTP ${res.status})` }))
+        ).catch(err => this.setState({ flash: `Request failure (${err.message})` }));
     };
 
     render() {
@@ -31,7 +31,7 @@ export default class Signup extends Component {
             <form onChange={this.onInput} onSubmit={this.onSubmit}>
                 <h1>Signup: {JSON.stringify(fields, undefined, 1)}</h1>
 
-                {flash ? <p style={{background: 'yellow'}}>{flash}</p> : ''}
+                {flash ? <p style={{ background: 'yellow' }}>{flash}</p> : ''}
 
                 <p><label>Email<br /><input name="email" type="email" autoComplete="username" /></label></p>
                 <p><label>Password<br /><input name="password" type="password" autoComplete="new-password" /></label></p>

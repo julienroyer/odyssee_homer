@@ -21,8 +21,8 @@ export default class Signin extends Component {
             }
         ).then(res => res.json().then(
             res => this.setState({ flash: res.flash || 'OK' }),
-            () => this.setState({ flash: `request failure (HTTP ${res.status})` }))
-        ).catch(err => this.setState({ flash: `request failure (${err.message})` }));
+            () => this.setState({ flash: `Request failure (HTTP ${res.status})` }))
+        ).catch(err => this.setState({ flash: `Request failure (${err.message})` }));
     };
 
     render() {
@@ -31,7 +31,7 @@ export default class Signin extends Component {
             <form onChange={this.onInput} onSubmit={this.onSubmit}>
                 <h1>Signin: {JSON.stringify(fields, undefined, 1)}</h1>
 
-                {flash ? <p style={{background: 'yellow'}}>{flash}</p> : ''}
+                {flash ? <p style={{ background: 'yellow' }}>{flash}</p> : ''}
 
                 <p><label>Email<br /><input name="email" type="email" autoComplete="username" /></label></p>
                 <p><label>Password<br /><input name="password" type="password" autoComplete="current-password" /></label></p>
