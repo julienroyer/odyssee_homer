@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 export default class Signin extends Component {
     constructor(props) {
@@ -27,8 +28,9 @@ export default class Signin extends Component {
 
     render() {
         const { flash, fields, } = this.state;
-        return (
-            <form onChange={this.onInput} onSubmit={this.onSubmit}>
+        return [
+            <p key="0"><Link to={Signup}>Sign up</Link></p>,
+            <form key="1" onChange={this.onInput} onSubmit={this.onSubmit}>
                 <h1>Signin: {JSON.stringify(fields, undefined, 1)}</h1>
 
                 {flash ? <p style={{ background: 'yellow' }}>{flash}</p> : ''}
@@ -36,7 +38,7 @@ export default class Signin extends Component {
                 <p><label>Email<br /><input name="email" type="email" autoComplete="username" required /></label></p>
                 <p><label>Password<br /><input name="password" type="password" autoComplete="current-password" required /></label></p>
                 <p><input type="submit" value="Submit" /></p>
-            </form>
-        );
+            </form>,
+        ];
     }
 }
