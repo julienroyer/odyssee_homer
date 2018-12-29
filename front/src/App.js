@@ -3,6 +3,7 @@ import React from 'react';
 import Profile from './Profile';
 import Signin from './Signin';
 import Signup from './Signup';
+import NotFound from './NotFound';
 
 export default () => (
     <Router>
@@ -11,11 +12,7 @@ export default () => (
             <Route path="/signin" component={Signin} />
             <Route path="/profile" component={Profile} />
             <Route path="/signup" component={Signup} />
-            <Route render={({ location }) => [
-                <p key="0">The requested URL <code>{location.pathname}</code> was
-                    not found on this server (404).</p>,
-                <p key="1"><Link to="/">Home</Link></p>,
-            ]} />
+            <Route component={NotFound} />
         </Switch>
     </Router>
 );
