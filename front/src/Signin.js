@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
-export default class Signin extends Component {
+class Signin extends Component {
     constructor(props) {
         super(props);
         this.state = { flash: '', fields: {}, };
@@ -21,7 +21,7 @@ export default class Signin extends Component {
                 body: JSON.stringify(fields),
             }
         ).then(res => res.json().then(
-            res => this.setState({ flash: res.flash || 'OK' }),
+            res => this.props.history.push('/profile'),
             () => this.setState({ flash: `Request failure (HTTP ${res.status})` }))
         ).catch(err => this.setState({ flash: `Request failure (${err.message})` }));
     };
@@ -42,3 +42,5 @@ export default class Signin extends Component {
         ];
     }
 }
+
+export default withRouter(Signin);
