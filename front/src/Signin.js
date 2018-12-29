@@ -31,7 +31,7 @@ export default class Signin extends Component {
         return [
             <p key="0"><Link to="/signup">Sign up</Link></p>,
             <form key="1" onChange={this.onInput} onSubmit={this.onSubmit}>
-                <h1>Signin: {JSON.stringify(fields, undefined, 1)}</h1>
+                <h1>Sign in: {JSON.stringify(fields, undefined, 1)}</h1>
 
                 {flash ? <p style={{ background: 'yellow' }}>{flash}</p> : ''}
 

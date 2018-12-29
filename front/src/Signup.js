@@ -29,7 +29,7 @@ export default class Signup extends Component {
         const { flash, fields, } = this.state;
         return (
             <form onChange={this.onInput} onSubmit={this.onSubmit}>
-                <h1>Signup: {JSON.stringify(fields, undefined, 1)}</h1>
+                <h1>Sign up: {JSON.stringify(fields, undefined, 1)}</h1>
 
                 {flash ? <p style={{ background: 'yellow' }}>{flash}</p> : ''}
 
