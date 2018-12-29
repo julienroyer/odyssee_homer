@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Switch, Route, Redirect, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import React from 'react';
 import Profile from './Profile';
 import Signin from './Signin';
