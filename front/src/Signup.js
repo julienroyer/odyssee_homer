@@ -33,9 +33,9 @@ export default class Signup extends Component {
 
                 {flash ? <p style={{ background: 'yellow' }}>{flash}</p> : ''}
 
-                <p><label>Email<br /><input name="email" type="email" autoComplete="username" /></label></p>
-                <p><label>Password<br /><input name="password" type="password" autoComplete="new-password" /></label></p>
-                <p><label>Password bis<br /><input name="passwordbis" type="password" autoComplete="new-password" /></label></p>
+                <p><label>Email<br /><input name="email" type="email" autoComplete="username" required /></label></p>
+                <p><label>Password<br /><input name="password" type="password" autoComplete="new-password" required /></label></p>
+                <p><label>Password bis<br /><input name="passwordbis" type="password" autoComplete="new-password" required /></label></p>
                 <p><label>Name<br /><input name="name" /></label></p>
                 <p><label>Last name<br /><input name="lastname" /></label></p>
                 <p><input type="submit" value="Submit" /></p>

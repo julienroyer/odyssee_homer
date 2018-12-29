@@ -33,8 +33,8 @@ export default class Signin extends Component {
 
                 {flash ? <p style={{ background: 'yellow' }}>{flash}</p> : ''}
 
-                <p><label>Email<br /><input name="email" type="email" autoComplete="username" /></label></p>
-                <p><label>Password<br /><input name="password" type="password" autoComplete="current-password" /></label></p>
+                <p><label>Email<br /><input name="email" type="email" autoComplete="username" required /></label></p>
+                <p><label>Password<br /><input name="password" type="password" autoComplete="current-password" required /></label></p>
                 <p><input type="submit" value="Submit" /></p>
             </form>
         );
