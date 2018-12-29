@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import Signup from './Signup';
 
 export default class Signin extends Component {
     constructor(props) {
@@ -30,7 +29,7 @@ export default class Signin extends Component {
     render() {
         const { flash, fields, } = this.state;
         return [
-            <p key="0"><Link to={Signup}>Sign up</Link></p>,
+            <p key="0"><Link to="/signup">Sign up</Link></p>,
             <form key="1" onChange={this.onInput} onSubmit={this.onSubmit}>
                 <h1>Signin: {JSON.stringify(fields, undefined, 1)}</h1>
 
