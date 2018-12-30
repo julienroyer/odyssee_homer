@@ -21,7 +21,7 @@ class Signin extends Component {
                 body: JSON.stringify(fields),
             }
         ).then(res => res.json().then(
-            () => this.props.history.push('/profile'),
+            obj => res.ok ? this.props.history.push('/profile') : this.setState({ flash: obj.flash }),
             () => this.setState({ flash: `Request failure (HTTP ${res.status})` }))
         ).catch(err => this.setState({ flash: `Request failure (${err.message})` }));
     };
