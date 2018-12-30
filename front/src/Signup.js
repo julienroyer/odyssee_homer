@@ -33,7 +33,7 @@ class Signup extends Component {
             <form key="1" onChange={this.onInput} onSubmit={this.onSubmit}>
                 <h1>Sign up: {JSON.stringify(fields, undefined, 1)}</h1>
 
-                {flash ? <p style={{ background: 'yellow' }}>{flash}</p> : ''}
+                {flash ? <p><mark>{flash}</mark></p> : ''}
 
                 <p><label>Email<br /><input name="email" type="email" autoComplete="username" required /></label></p>
                 <p><label>Password<br /><input name="password" type="password" autoComplete="new-password" required /></label></p>
