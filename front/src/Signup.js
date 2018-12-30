@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 
-class Signup extends Component {
+class Signup extends React.Component {
     constructor(props) {
         super(props);
         this.state = { flash: '', fields: {}, };

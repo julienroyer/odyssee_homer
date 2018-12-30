@@ -1,22 +1,21 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { withRouter } from 'react-router-dom';
 
-class Profile extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {};
-    }
+class Profile extends React.Component {
+    logout = () => {
+        this.props.history.push('/');
+    };
 
     render() {
         return [
-            <button key="0" onClick={() => this.props.history.push('/signin')}>Log out</button>,
+            <button key="0" onClick={this.logout}>Log out</button>,
             <dl key="1">
                 <dt>Email</dt>
-                <dd>{this.state.email}</dd>
+                <dd>{this.props.email}</dd>
                 <dt>Name</dt>
-                <dd>{this.state.name}</dd>
+                <dd>{this.props.name}</dd>
                 <dt>Last name</dt>
-                <dd>{this.state.lastname}</dd>
+                <dd>{this.props.lastname}</dd>
             </dl>,
         ];
     }
