@@ -11,7 +11,7 @@ class Signup extends React.Component {
 
     onSubmit = e => {
         e.preventDefault();
-        const { passwordbis, fields, } = this.state.fields;
+        const { passwordbis, ...fields } = this.state.fields;
         if (passwordbis !== fields.password) {
             this.setState({ flash: `'Password' and 'Password bis' must be the same.` })
         } else {
