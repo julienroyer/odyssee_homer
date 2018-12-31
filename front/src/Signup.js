@@ -7,7 +7,7 @@ class Signup extends React.Component {
         this.state = { flash: '', fields: {}, };
     }
 
-    onInput = e => (t => this.setState({ fields: { ...this.state.fields, [t.name]: t.value } }))(e.target);
+    onChange = e => (t => this.setState({ fields: { ...this.state.fields, [t.name]: t.value } }))(e.target);
 
     onSubmit = e => {
         e.preventDefault();
@@ -32,18 +32,19 @@ class Signup extends React.Component {
 
     render() {
         const { flash, fields, } = this.state;
+        const val = name => fields[name] || '';
         return [
             <p key="0"><Link to="/signin">Sign in</Link></p>,
-            <form key="1" onChange={this.onInput} onSubmit={this.onSubmit}>
+            <form key="1" onSubmit={this.onSubmit}>
                 <h1>Sign up: {JSON.stringify(fields, undefined, 1)}</h1>
 
                 {flash ? <p><mark>{flash}</mark></p> : ''}
 
-                <p><label>Email<br /><input name="email" type="email" autoComplete="username" required /></label></p>
-                <p><label>Password<br /><input name="password" type="password" autoComplete="new-password" required /></label></p>
-                <p><label>Password bis<br /><input name="passwordbis" type="password" autoComplete="new-password" required /></label></p>
-                <p><label>Name<br /><input name="name" /></label></p>
-                <p><label>Last name<br /><input name="lastname" /></label></p>
+                <p><label>Email<br /><input name="email" type="email" autoComplete="username" required value={val('email')} onChange={this.onChange} /></label></p>
+                <p><label>Password<br /><input name="password" type="password" autoComplete="new-password" required value={val('password')} onChange={this.onChange} /></label></p>
+                <p><label>Password bis<br /><input name="passwordbis" type="password" autoComplete="new-password" required value={val('passwordbis')} onChange={this.onChange} /></label></p>
+                <p><label>Name<br /><input name="name" value={val('name')} onChange={this.onChange} /></label></p>
+                <p><label>Last name<br /><input name="lastname" value={val('lastname')} onChange={this.onChange} /></label></p>
                 <p><input type="submit" value="Submit" /></p>
             </form>,
         ];
