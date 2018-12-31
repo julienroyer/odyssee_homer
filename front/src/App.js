@@ -10,8 +10,8 @@ export default () => (
         <Switch>
             <Redirect exact from="/" to="/signin" />
             <Route path="/signin" component={Signin} />
-            <Route path="/profile" component={Profile} />
             <Route path="/signup" component={Signup} />
+            <Route path="/profile" component={Profile} />
             <Route component={NotFound} />
         </Switch>
     </Router>
