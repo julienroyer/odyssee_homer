@@ -7,17 +7,17 @@ class Profile extends React.Component {
     };
 
     render() {
-        return [
-            <button key="0" onClick={this.logout}>Log out</button>,
-            <dl key="1">
+        return <>
+            <button onClick={this.logout}>Log out</button>
+            <dl>
                 <dt>Email</dt>
                 <dd>{this.props.email}</dd>
                 <dt>Name</dt>
                 <dd>{this.props.name}</dd>
                 <dt>Last name</dt>
                 <dd>{this.props.lastname}</dd>
-            </dl>,
-        ];
+            </dl>
+        </>;
     }
 }
 

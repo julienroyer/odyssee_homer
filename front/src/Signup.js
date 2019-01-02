@@ -33,9 +33,9 @@ class Signup extends React.Component {
     render() {
         const { flash, fields, } = this.state;
         const val = name => fields[name] || '';
-        return [
-            <p key="0"><Link to="/signin">Sign in</Link></p>,
-            <form key="1" onSubmit={this.onSubmit}>
+        return <>
+            <p><Link to="/signin">Sign in</Link></p>
+            <form onSubmit={this.onSubmit}>
                 <h1>Sign up: {JSON.stringify(fields, undefined, 1)}</h1>
 
                 {flash ? <p><mark>{flash}</mark></p> : ''}
@@ -46,8 +46,8 @@ class Signup extends React.Component {
                 <p><label>Name<br /><input name="name" value={val('name')} onChange={this.onChange} /></label></p>
                 <p><label>Last name<br /><input name="lastname" value={val('lastname')} onChange={this.onChange} /></label></p>
                 <p><input type="submit" value="Submit" /></p>
-            </form>,
-        ];
+            </form>
+        </>;
     }
 }
 
