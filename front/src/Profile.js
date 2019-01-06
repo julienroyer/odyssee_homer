@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 
-class Profile extends React.Component {
+export default withRouter(class Profile extends React.Component {
     logout = () => {
         this.props.history.push('/');
     };
@@ -19,6 +19,4 @@ class Profile extends React.Component {
             </dl>
         </>;
     }
-}
-
-export default withRouter(Profile);
+})

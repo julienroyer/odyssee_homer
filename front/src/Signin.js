@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 
-class Signin extends React.Component {
+export default withRouter(class Signin extends React.Component {
     constructor(props) {
         super(props);
         this.state = { flash: '', fields: {}, };
@@ -41,6 +41,4 @@ class Signin extends React.Component {
             </form>
         </>;
     }
-}
-
-export default withRouter(Signin);
+});
