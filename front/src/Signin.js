@@ -2,10 +2,7 @@ import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 
 export default withRouter(class Signin extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = { flash: '', fields: {}, };
-    }
+    state = { flash: '', fields: {}, };
 
     onInput = e => (t => this.setState({ fields: { ...this.state.fields, [t.name]: t.value } }))(e.target);
 
