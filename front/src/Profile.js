@@ -2,9 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 
 export default withRouter(class Profile extends React.Component {
-    logout = () => {
-        this.props.history.push('/');
-    };
+    logout = () => { this.props.history.push('/') }
 
     render() {
         return <>

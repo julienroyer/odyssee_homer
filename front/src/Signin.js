@@ -41,4 +41,4 @@ export default withRouter(class Signin extends React.Component {
             </form>
         </>;
     }
-});
+})

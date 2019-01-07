@@ -1,8 +1,8 @@
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import React from 'react';
-import Profile from './Profile';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import Signin from './Signin';
 import Signup from './Signup';
+import Profile from './Profile';
 import NotFound from './NotFound';
 
 export default () => (
