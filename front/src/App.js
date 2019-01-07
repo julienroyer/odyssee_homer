@@ -6,13 +6,15 @@ import Profile from './Profile';
 import NotFound from './NotFound';
 
 export default () => (
-    <Router>
-        <Switch>
-            <Redirect exact from="/" to="/signin" />
-            <Route path="/signin" component={Signin} />
-            <Route path="/signup" component={Signup} />
-            <Route path="/profile" component={Profile} />
-            <Route component={NotFound} />
-        </Switch>
-    </Router>
+    <React.StrictMode>
+        <Router>
+            <Switch>
+                <Redirect exact from="/" to="/signin" />
+                <Route path="/signin" component={Signin} />
+                <Route path="/signup" component={Signup} />
+                <Route path="/profile" component={Profile} />
+                <Route component={NotFound} />
+            </Switch>
+        </Router>
+    </React.StrictMode>
 );
