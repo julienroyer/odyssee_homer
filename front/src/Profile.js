@@ -1,7 +1,6 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
 
-export default withRouter(class Profile extends React.Component {
+export default class Profile extends React.Component {
     state = { flash: '', profile: { name: 'Loading…', lastname: 'Loading…', }, };
 
     componentDidMount() {
@@ -31,4 +30,4 @@ export default withRouter(class Profile extends React.Component {
             </dl>
         </>;
     }
-})
+}

@@ -1,7 +1,7 @@
 import React from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-export default withRouter(class Signin extends React.Component {
+export default class Signin extends React.Component {
     state = { flash: '', fields: {}, };
 
     onInput = e => (t => this.setState({ fields: { ...this.state.fields, [t.name]: t.value } }))(e.target);
@@ -38,4 +38,4 @@ export default withRouter(class Signin extends React.Component {
             </form>
         </>;
     }
-})
+}
