@@ -25,12 +25,21 @@ export default class Signin extends React.Component {
 
     render() {
         const { flash, fields, } = this.state;
-        return <>
+        return flash ? <>
             <p><Link to="/signup">Sign up</Link></p>
             <form onChange={this.onInput} onSubmit={this.onSubmit}>
                 <h1>Sign in: {JSON.stringify(fields, undefined, 1)}</h1>
 
-                {flash ? <p><mark>{flash}</mark></p> : ''}
+                <p><mark>{flash}</mark></p>
+
+                <p><label>Email<br /><input name="email" type="email" autoComplete="username" required /></label></p>
+                <p><label>Password<br /><input name="password" type="password" autoComplete="current-password" required /></label></p>
+                <p><input type="submit" value="Submit" /></p>
+            </form>
+        </> : <>
+            <p><Link to="/signup">Sign up</Link></p>
+            <form onChange={this.onInput} onSubmit={this.onSubmit}>
+                <h1>Sign in: {JSON.stringify(fields, undefined, 1)}</h1>
 
                 <p><label>Email<br /><input name="email" type="email" autoComplete="username" required /></label></p>
                 <p><label>Password<br /><input name="password" type="password" autoComplete="current-password" required /></label></p>

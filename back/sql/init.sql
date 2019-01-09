@@ -1,8 +1,8 @@
 CREATE TABLE users 
 ( 
-    id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    email VARCHAR(90) UNIQUE,
-    password VARCHAR(90),
-    name VARCHAR(90),
-    lastname VARCHAR(90)
+    id INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    email VARCHAR(90) UNIQUE NOT NULL,
+    password VARCHAR(90) NOT NULL,
+    name VARCHAR(90) NOT NULL,
+    lastname VARCHAR(90) NOT NULL
 );

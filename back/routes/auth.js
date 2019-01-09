@@ -1,10 +1,15 @@
-const connection = require('../helpers/db');
 const express = require('express');
+const connection = require('../helpers/db');
 
 const router = express.Router();
 
 router.post('/signup', (req, res) => {
-    connection.query('INSERT INTO users SET ?', req.body, error => {
+    const values = ['email', 'password', 'name', 'lastname'].reduce((a, v) => {
+        const val = req.body[v];
+        a[v] = (val && String(val).trim()) || undefined;
+        return a;
+    }, {});
+    connection.query('INSERT INTO users SET ?', values, error => {
         if (error) {
             res.status(500).json({ flash: error.message }).end();
         } else {
@@ -14,9 +19,9 @@ router.post('/signup', (req, res) => {
 });
 
 router.post('/signin', (req, res) => {
-    const b = req.body;
+    const { email, password } = req.body;
     connection.query('SELECT COUNT(*) AS count FROM users WHERE email=? AND password=?',
-        [b.email, b.password], (error, result) => {
+        [email, password], (error, result) => {
             if (error) {
                 res.status(500).json({ flash: error.message }).end();
             } else if (result[0].count !== 1) {
