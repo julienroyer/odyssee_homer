@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default class Profile extends React.Component {
-    state = { flash: '', profile: { name: 'Loading…', lastname: 'Loading…', }, };
+    state = { profile: {}, };
 
     componentDidMount() {
         fetch(`/user/${this.props.match.params.email}/profile`)
@@ -14,20 +14,18 @@ export default class Profile extends React.Component {
     logout = () => { this.props.history.push('/') }
 
     render() {
-        const { email, } = this.props.match.params;
-        const { flash, profile, } = this.state;
-
+        const { email, } = this.props.match.params, { flash, profile, } = this.state;
         return <>
             <button onClick={this.logout}>Log out</button>
             <h1>Profile</h1>
-            {flash ? <p><mark>{flash}</mark></p> : ''}
+            {Boolean(flash) && <p><mark>{flash}</mark></p>}
             <dl>
                 <dt>Email</dt>
                 <dd>{email}</dd>
                 <dt>Name</dt>
-                <dd>{profile.name}</dd>
+                <dd>{profile.name || <i>Loading…</i>}</dd>
                 <dt>Last name</dt>
-                <dd>{profile.lastname}</dd>
+                <dd>{profile.lastname || <i>Loading…</i>}</dd>
             </dl>
         </>;
     }
