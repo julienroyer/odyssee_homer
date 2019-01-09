@@ -20,9 +20,9 @@ router.post('/signup', async (req, res) => {
     });
 });
 
-router.post('/signin', async (req, res) => {
+router.post('/signin', (req, res) => {
     const { email, password } = req.body;
-    connection.query('SELECT password FROM users WHERE email=?', [email], (error, result) => {
+    connection.query('SELECT password FROM users WHERE email=?', [email], async (error, result) => {
         if (error) {
             res.status(500).json({ flash: error.message }).end();
         } else {
