@@ -1,6 +1,7 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
+const jwt = require('jsonwebtoken');
 const connection = require('../helpers/db');
 
 const router = express.Router();
@@ -26,7 +27,8 @@ router.post('/signin', (req, res) => {
         if (error) {
             res.status(500).json(error).end();
         } else if (user) {
-            res.json({ flash: info, }).end();
+            const token = jwt.sign(user, 'your_jwt_secret');
+            res.json({ flash: info, user, token, }).end();
         } else {
             res.status(403).json({ flash: info, }).end();
         }
