@@ -21,20 +21,15 @@ router.post('/signup', async (req, res) => {
 });
 
 router.post('/signin', (req, res) => {
-    const { email, password } = req.body;
-    connection.query('SELECT password FROM users WHERE email=?', [email], async (error, result) => {
+    passport.authenticate('local', (error, user, info) => {
         if (error) {
-            res.status(500).json({ flash: error.message }).end();
+            res.status(500).json(error).end();
+        } else if (user) {
+            res.json({ flash: info, }).end();
         } else {
-            const entry = result[0];
-            const match = await bcrypt.compare(password, entry ? entry.password : '$2b$10$TRUiCb7DnUDKN0544viAZ.cZNey36JuR3vxm7MjECG7yY9NR6HVeS');
-            if (entry && match) {
-                res.json({ flash: 'User has been signed in!' }).end();
-            } else {
-                res.status(403).json({ flash: 'Invalid credentials' }).end();
-            }
+            res.status(403).json({ flash: info, }).end();
         }
-    });
+    })(req, res);
 });
 
 module.exports = router;

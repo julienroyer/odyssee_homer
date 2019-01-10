@@ -36,14 +36,14 @@ passport.use(new LocalStrategy(
     (email, password, done) =>
         connection.query('SELECT password FROM users WHERE email=?', [email], async (error, result) => {
             if (error) {
-                done(err);
+                done(error);
             } else {
                 const entry = result[0];
                 const match = await bcrypt.compare(password, entry ? entry.password : '$2b$10$TRUiCb7DnUDKN0544viAZ.cZNey36JuR3vxm7MjECG7yY9NR6HVeS');
                 if (entry && match) {
-                    done(null, { email, }, { flash: 'User has been signed in!', });
+                    done(null, { email, }, 'User has been signed in!');
                 } else {
-                    done(null, false, { flash: 'Invalid credentials', });
+                    done(null, false, 'Invalid credentials');
                 }
             }
         })
