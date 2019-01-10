@@ -3,6 +3,7 @@ const express = require('express');
 const morgan = require('morgan');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
+const bcrypt = require('bcrypt');
 const authRouter = require('./routes/auth');
 const userRouter = require('./routes/user');
 const connection = require('./helpers/db');
