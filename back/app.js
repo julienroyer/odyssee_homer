@@ -3,6 +3,8 @@ const express = require('express');
 const morgan = require('morgan');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
+const ExtractJwt = require('passport-jwt').ExtractJwt;
+const JwtStrategy = require('passport-jwt').Strategy;
 const bcrypt = require('bcrypt');
 const authRouter = require('./routes/auth');
 const userRouter = require('./routes/user');
@@ -48,6 +50,14 @@ passport.use(new LocalStrategy(
                 }
             }
         })
+));
+
+passport.use(new JwtStrategy(
+    {
+        jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+        secretOrKey: 'your_jwt_secret'
+    },
+    (jwtPayload, cb) => cb(null, jwtPayload)
 ));
 
 const server = app.listen(process.env.PORT || 5000, () => {
