@@ -1,9 +1,10 @@
 const connection = require('../helpers/db');
 const express = require('express');
+const passport = require('passport');
 
 const router = express.Router();
 
-router.get('/:email/profile', (req, res) => {
+router.get('/:email/profile', passport.authenticate('jwt', { session: false }), (req, res) => {
     const email = req.params.email;
     connection.query('SELECT name, lastname FROM users WHERE email=?', [email], (error, result) => {
         if (error) {
