@@ -15,7 +15,7 @@ router.post('/signup', async (req, res) => {
     values.password = values.password && await bcrypt.hash(values.password, 10);
     connection.query('INSERT INTO users SET ?', values, error => {
         if (error) {
-            res.status(500).json({ flash: error.message }).end();
+            res.status(500).json({ flash: error.message, }).end();
         } else {
             res.json({ flash: 'User has been signed up!' }).end();
         }
