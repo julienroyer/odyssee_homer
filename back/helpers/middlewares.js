@@ -1,3 +1,3 @@
 module.exports = {
-    safeAsync: fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next),
+    safeAsync: fn => (...args) => Promise.resolve(fn(...args)).catch(args[args.length - 1]),
 }
