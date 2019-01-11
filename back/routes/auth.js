@@ -3,16 +3,16 @@ const bcrypt = require('bcrypt');
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const connection = require('../helpers/db');
-const { safe } = require('../helpers/middlewares');
+const { safeAsync } = require('../helpers/middlewares');
 
 const router = express.Router();
 
-router.post('/signup', safe(async (req, res) => {
+router.post('/signup', safeAsync(async (req, res) => {
     const values = ['email', 'password', 'name', 'lastname'].reduce((a, v) => {
         const val = req.body[v];
         a[v] = (val && String(val).trim()) || undefined;
         if (!a[v]) {
-            throw new Error(`missing '${v}' parameter`);
+            throw `missing '${v}' parameter`;
         }
         return a;
     }, {});
