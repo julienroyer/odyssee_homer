@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-export default class Signin extends React.Component {
+export default connect()(class Signin extends React.Component {
     state = { flash: '', fields: {}, };
 
     onInput = e => (t => this.setState({ fields: { ...this.state.fields, [t.name]: t.value } }))(e.target);
@@ -38,4 +39,4 @@ export default class Signin extends React.Component {
             </form>
         </>;
     }
-}
+})
