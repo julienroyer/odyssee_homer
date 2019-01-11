@@ -1,12 +1,12 @@
-const connection = require('../helpers/db');
 const express = require('express');
 const passport = require('passport');
+const { pool: dbPool } = require('../helpers/db');
 
 const router = express.Router();
 
 router.get('/:email/profile', passport.authenticate('jwt', { session: false }), (req, res) => {
     const email = req.params.email;
-    connection.query('SELECT name, lastname FROM users WHERE email=?', [email], (error, result) => {
+    dbPool.query('SELECT name, lastname FROM users WHERE email=?', [email], (error, result) => {
         if (error) {
             res.status(500).json({ flash: error.message }).end();
         } else if (!result.length) {

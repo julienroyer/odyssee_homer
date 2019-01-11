@@ -2,7 +2,7 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
-const connection = require('../helpers/db');
+const { pool: dbPool } = require('../helpers/db');
 const { safeAsync } = require('../helpers/middlewares');
 
 const router = express.Router();
@@ -17,7 +17,7 @@ router.post('/signup', safeAsync(async (req, res) => {
         return a;
     }, {});
     values.password = await bcrypt.hash(values.password, 10);
-    connection.query('INSERT INTO users SET ?', values, error => {
+    dbPool.query('INSERT INTO users SET ?', values, error => {
         if (error) {
             res.status(500).json({ flash: error.message, }).end();
         } else {

@@ -7,7 +7,7 @@ const { ExtractJwt, Strategy: JwtStrategy } = require('passport-jwt');
 const bcrypt = require('bcrypt');
 const authRouter = require('./routes/auth');
 const userRouter = require('./routes/user');
-const connection = require('./helpers/db');
+const { dbPool } = require('./helpers/db');
 
 const app = express();
 
@@ -36,7 +36,7 @@ passport.use(new LocalStrategy(
         session: false,
     },
     (email, password, done) =>
-        connection.query('SELECT password FROM users WHERE email=?', [email], async (error, result) => {
+        dbPool.query('SELECT password FROM users WHERE email=?', [email], async (error, result) => {
             if (error) {
                 done(error);
             } else {
