@@ -18,7 +18,7 @@ export default class Signin extends React.Component {
                 body: JSON.stringify(fields),
             }
         ).then(res => res.json().then(
-            obj => res.ok ? this.props.history.push(`/profile/${fields.email}`) : this.setState({ flash: obj.flash }),
+            obj => res.ok ? this.props.history.push(`/profile/${fields.email}`) : this.setState({ flash: obj.flash || 'Unknown error' }),
             () => this.setState({ flash: `Request failure (HTTP ${res.status})` }))
         ).catch(err => this.setState({ flash: `Request failure (${err.message})` }));
     };
