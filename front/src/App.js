@@ -13,7 +13,7 @@ export default () => (
                 <Route path="/signup" component={Signup} />
                 <Route path="/profile/:email" component={Profile} />
                 <Route render={({ location }) => <>
-                    <p>The requested URL <code>{location.pathname}</code> was not found on this server (404).</p>
+                    <p>The requested URL <code>{location.pathname}</code> was not found.</p>
                     <p><Link to="/">Home</Link></p>
                 </>} />
             </Switch>
