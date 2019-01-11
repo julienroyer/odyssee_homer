@@ -7,7 +7,7 @@ const { ExtractJwt, Strategy: JwtStrategy } = require('passport-jwt');
 const bcrypt = require('bcrypt');
 const authRouter = require('./routes/auth');
 const userRouter = require('./routes/user');
-const { dbPool } = require('./helpers/db');
+const { pool: dbPool } = require('./helpers/db');
 
 const app = express();
 
