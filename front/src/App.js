@@ -1,9 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
-import Signin from './Signin';
-import Signup from './Signup';
-import Profile from './Profile';
-import NotFound from './NotFound';
+import Signin from './containers/Signin';
+import Signup from './containers/Signup';
+import Profile from './containers/Profile';
 
 export default () => (
     <React.StrictMode>
@@ -13,7 +12,10 @@ export default () => (
                 <Route path="/signin" component={Signin} />
                 <Route path="/signup" component={Signup} />
                 <Route path="/profile/:email" component={Profile} />
-                <Route component={NotFound} />
+                <Route render={({ location }) => <>
+                    <p>The requested URL <code>{location.pathname}</code> was not found on this server (404).</p>
+                    <p><Link to="/">Home</Link></p>
+                </>} />
             </Switch>
         </Router>
     </React.StrictMode>
