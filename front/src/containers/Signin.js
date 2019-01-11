@@ -5,6 +5,15 @@ import { connect } from 'react-redux';
 export default connect()(class Signin extends React.Component {
     state = { flash: '', fields: {}, };
 
+    onLogin(obj) {
+        this.props.dispatch({
+            type: "CREATE_SESSION",
+            user: obj.user,
+            token: obj.token,
+        });
+        this.props.history.push(`/profile/${this.state.fields.email}`);
+    }
+
     onInput = e => (t => this.setState({ fields: { ...this.state.fields, [t.name]: t.value } }))(e.target);
 
     onSubmit = e => {
@@ -19,7 +28,7 @@ export default connect()(class Signin extends React.Component {
                 body: JSON.stringify(fields),
             }
         ).then(res => res.json().then(
-            obj => res.ok ? this.props.history.push(`/profile/${fields.email}`) : this.setState({ flash: obj.flash || 'Unknown error' }),
+            obj => res.ok ? this.onLogin(obj) : this.setState({ flash: obj.flash || 'Unknown error' }),
             () => this.setState({ flash: `Request failure (HTTP ${res.status})` }))
         ).catch(err => this.setState({ flash: `Request failure (${err.message})` }));
     };
