@@ -18,7 +18,7 @@ export default () => (
                     <Redirect exact from="/" to="/signin" />
                     <Route path="/signin" component={Signin} />
                     <Route path="/signup" component={Signup} />
-                    <Route path="/profile/:email" component={Profile} />
+                    <Route path="/profile" component={Profile} />
                     <Route render={({ location }) => <>
                         <p>The requested URL <code>{location.pathname}</code> was not found.</p>
                         <p><Link to="/">Home</Link></p>

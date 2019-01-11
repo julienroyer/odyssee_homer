@@ -7,11 +7,10 @@ export default connect()(class Signin extends React.Component {
 
     onLogin(obj) {
         this.props.dispatch({
-            type: "CREATE_SESSION",
-            user: obj.user,
-            token: obj.token,
+            type: "LOGIN",
+            user: { email: obj.user.email, token: obj.token, },
         });
-        this.props.history.push(`/profile/${this.state.fields.email}`);
+        this.props.history.push('/profile');
     }
 
     onInput = e => (t => this.setState({ fields: { ...this.state.fields, [t.name]: t.value } }))(e.target);

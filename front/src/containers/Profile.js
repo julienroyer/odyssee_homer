@@ -1,10 +1,15 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-export default class Profile extends React.Component {
+export default connect(state => ({ user: state.auth.user, }))(class Profile extends React.Component {
     state = { profile: {}, };
 
     componentDidMount() {
-        fetch(`/user/${this.props.match.params.email}/profile`)
+        fetch(`/user/${this.props.user.email}/profile`, {
+            headers: new Headers({
+                Authorization: `Bearer ${this.props.user.token}`,
+            }),
+        })
             .then(res => res.json().then(
                 obj => res.ok ? this.setState({ profile: obj }) : this.setState({ flash: obj.flash }),
                 () => this.setState({ flash: `Request failure (HTTP ${res.status})` }))
@@ -14,7 +19,7 @@ export default class Profile extends React.Component {
     logout = () => { this.props.history.push('/') }
 
     render() {
-        const { email, } = this.props.match.params, { flash, profile, } = this.state;
+        const email = this.props.user.email, { flash, profile, } = this.state;
         return <>
             <button onClick={this.logout}>Log out</button>
             <h1>Profile</h1>
@@ -29,4 +34,4 @@ export default class Profile extends React.Component {
             </dl>
         </>;
     }
-}
+})
