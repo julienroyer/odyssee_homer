@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-export default connect(state => ({ user: state.auth.user, }))(class Profile extends React.Component {
+export default connect(({ auth }) => auth)(class Profile extends React.Component {
     state = { profile: {}, };
 
     componentDidMount() {
@@ -9,11 +9,10 @@ export default connect(state => ({ user: state.auth.user, }))(class Profile exte
             headers: new Headers({
                 Authorization: `Bearer ${this.props.user.token}`,
             }),
-        })
-            .then(res => res.json().then(
-                obj => res.ok ? this.setState({ profile: obj }) : this.setState({ flash: obj.flash }),
-                () => this.setState({ flash: `Request failure (HTTP ${res.status})` }))
-            ).catch(err => this.setState({ flash: `Request failure (${err.message})` }));
+        }).then(res => res.json().then(
+            obj => res.ok ? this.setState({ profile: obj }) : this.setState({ flash: obj.flash }),
+            () => this.setState({ flash: `Request failure (HTTP ${res.status})` }))
+        ).catch(err => this.setState({ flash: `Request failure (${err.message})` }));
     }
 
     logout = () => { this.props.history.push('/') }
