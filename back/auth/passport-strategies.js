@@ -1,11 +1,12 @@
-const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const { ExtractJwt, Strategy: JwtStrategy } = require('passport-jwt');
 const bcrypt = require('bcrypt');
 
 const { pool: dbPool } = require('../helpers/db');
 
-passport.use(new LocalStrategy({ usernameField: 'email' }, (email, password, done) =>
+const strategies = [];
+
+strategies.push(new LocalStrategy({ usernameField: 'email' }, (email, password, done) =>
     dbPool.query('SELECT password FROM users WHERE email=?', [email], async (error, result) => {
         if (error) {
             throw error;
@@ -21,10 +22,12 @@ passport.use(new LocalStrategy({ usernameField: 'email' }, (email, password, don
     })
 ));
 
-passport.use(new JwtStrategy(
+strategies.push(new JwtStrategy(
     {
         jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
         secretOrKey: 'your_jwt_secret'
     },
     (jwtPayload, cb) => cb(null, jwtPayload)
 ));
+
+module.exports = strategies;
