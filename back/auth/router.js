@@ -25,17 +25,15 @@ router.post('/signup', safeAsync(async (req, res) => {
     });
 }));
 
-router.post('/signin', (req, res) => {
-    passport.authenticate('local', (error, user, info) => {
-        if (error) {
-            res.status(500).json({ flash: error.message }).end();
-        } else if (user) {
-            const token = jwt.sign(user, 'your_jwt_secret');
-            res.json({ flash: info, user, token, }).end();
-        } else {
-            res.status(403).json({ flash: info, }).end();
-        }
-    })(req, res);
-});
+router.post('/signin', (req, res) => passport.authenticate('local', (error, user, info) => {
+    if (error) {
+        res.status(500).json({ flash: error.message }).end();
+    } else if (user) {
+        const token = jwt.sign(user, 'your_jwt_secret');
+        res.json({ flash: info, user, token, }).end();
+    } else {
+        res.status(403).json({ flash: info, }).end();
+    }
+})(req, res));
 
 module.exports = router;
