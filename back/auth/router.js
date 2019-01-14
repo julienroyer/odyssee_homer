@@ -18,7 +18,7 @@ router.post('/signup', safeAsync(async (req, res) => {
     values.password = await bcrypt.hash(values.password, 10);
     dbPool.query('INSERT INTO users SET ?', values, error => {
         if (error) {
-            res.status(500).json({ flash: error.message, }).end();
+            res.status(500).json({ flash: error.message }).end();
         } else {
             res.json({ flash: 'User has been signed up!' }).end();
         }
@@ -28,7 +28,7 @@ router.post('/signup', safeAsync(async (req, res) => {
 router.post('/signin', (req, res) => {
     passport.authenticate('local', (error, user, info) => {
         if (error) {
-            res.status(500).json(error).end();
+            res.status(500).json({ flash: error.message }).end();
         } else if (user) {
             const token = jwt.sign(user, 'your_jwt_secret');
             res.json({ flash: info, user, token, }).end();

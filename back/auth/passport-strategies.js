@@ -3,8 +3,10 @@ const LocalStrategy = require('passport-local');
 const { ExtractJwt, Strategy: JwtStrategy } = require('passport-jwt');
 const bcrypt = require('bcrypt');
 
+const { pool: dbPool } = require('../helpers/db');
+
 passport.use(new LocalStrategy({ usernameField: 'email' }, (email, password, done) =>
-    dbPool.query('SELECT password FROM users WHERE email=?', [email], (async (error, result) => {
+    dbPool.query('SELECT password FROM users WHERE email=?', [email], async (error, result) => {
         if (error) {
             throw error;
         }
@@ -16,7 +18,7 @@ passport.use(new LocalStrategy({ usernameField: 'email' }, (email, password, don
         } else {
             done(null, null, 'invalid credentials');
         }
-    }).catch(done))
+    })
 ));
 
 passport.use(new JwtStrategy(
