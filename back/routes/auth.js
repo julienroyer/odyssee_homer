@@ -10,8 +10,7 @@ const router = express.Router();
 router.post('/signup', safeAsync(async (req, res) => {
     const values = ['email', 'password', 'name', 'lastname'].reduce((a, v) => {
         const val = req.body[v];
-        a[v] = (val && String(val).trim()) || undefined;
-        if (!a[v]) {
+        if (!(a[v] = (val && String(val).trim()))) {
             throw `missing '${v}' parameter`;
         }
         return a;
