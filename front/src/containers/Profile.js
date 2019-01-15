@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { logout } from '../actions/auth';
 
-export default connect(({ auth }) => auth)(class Profile extends React.Component {
+export default connect(({ auth }) => auth, { logout })(class Profile extends React.Component {
     state = { profile: {}, };
 
     componentDidMount() {
@@ -15,7 +16,7 @@ export default connect(({ auth }) => auth)(class Profile extends React.Component
         ).catch(err => this.setState({ flash: `Request failure (${err.message})` }));
     }
 
-    logout = () => { this.props.dispatch({ type: "LOGOUT" }) }
+    logout = () => this.props.logout();
 
     render() {
         const email = this.props.user.email, { flash, profile, } = this.state;
@@ -33,4 +34,4 @@ export default connect(({ auth }) => auth)(class Profile extends React.Component
             </dl>
         </>;
     }
-})
+});
