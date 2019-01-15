@@ -7,6 +7,7 @@ import Signin from './containers/Signin';
 import Signup from './containers/Signup';
 import Profile from './containers/Profile';
 import reducers from './reducers';
+import requireAuth from './hoc/requireAuth';
 
 const store = createStore(reducers);
 
@@ -18,7 +19,7 @@ export default () => (
                     <Redirect exact from="/" to="/signin" />
                     <Route path="/signin" component={Signin} />
                     <Route path="/signup" component={Signup} />
-                    <Route path="/profile" component={Profile} />
+                    <Route path="/profile" component={requireAuth(Profile)} />
                     <Route render={({ location }) => <>
                         <p>The requested URL <code>{location.pathname}</code> was not found.</p>
                         <p><Link to="/">Home</Link></p>
