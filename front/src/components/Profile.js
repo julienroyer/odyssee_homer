@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { logout } from '../actions/auth';
 
-export default connect(({ auth }) => auth, { logout })(class Profile extends React.Component {
+class Profile extends React.Component {
     state = { profile: {}, };
 
     componentDidMount() {
@@ -34,4 +34,6 @@ export default connect(({ auth }) => auth, { logout })(class Profile extends Rea
             </dl>
         </>;
     }
-});
+}
+
+export default connect(({ auth }) => auth, { logout })(Profile);

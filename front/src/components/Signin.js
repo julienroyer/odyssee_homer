@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { login } from '../actions/auth';
 
-export default connect(null, { login })(class Signin extends React.Component {
+class Signin extends React.Component {
     state = { flash: '', fields: {}, };
 
     onInput = e => (t => this.setState({ fields: { ...this.state.fields, [t.name]: t.value } }))(e.target);
@@ -40,4 +40,6 @@ export default connect(null, { login })(class Signin extends React.Component {
             </form>
         </>;
     }
-})
+}
+
+export default connect(null, { login })(Signin);
