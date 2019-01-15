@@ -2,7 +2,7 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
-const { pool: dbPool } = require('../helpers/db');
+const dbPool = require('../db/pool');
 const { safeAsync } = require('../helpers/middlewares');
 
 const router = express.Router();

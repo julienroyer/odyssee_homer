@@ -1,8 +1,7 @@
 const LocalStrategy = require('passport-local');
 const { ExtractJwt, Strategy: JwtStrategy } = require('passport-jwt');
 const bcrypt = require('bcrypt');
-
-const { pool: dbPool } = require('../helpers/db');
+const dbPool = require('../db/pool');
 
 const strategies = [];
 

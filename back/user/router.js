@@ -1,6 +1,6 @@
 const express = require('express');
 const passport = require('passport');
-const { pool: dbPool } = require('../helpers/db');
+const dbPool = require('../db/pool');
 
 const router = express.Router();
 
