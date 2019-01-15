@@ -11,13 +11,17 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static(__dirname + '/public'));
 
-app.get("/", (_req, res) => res.send("Welcome"));
+app.get("/", (_req, res) => res.send('Welcome'));
 app.use('/auth', authRouter);
 app.use('/user', userRouter);
 app.use((_req, _res, next) => {
     const err = new Error('Not Found');
     err.status = 404;
     next(err);
+});
+app.use((err, _req, res, _next) => {
+    // TODO
+    res.json(500, { flash: String(err.message) });
 });
 
 const server = app.listen(process.env.PORT || 5000,

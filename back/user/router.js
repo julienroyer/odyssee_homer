@@ -4,15 +4,15 @@ const dbPool = require('../db/pool');
 
 const router = express.Router();
 
-router.get('/:email/profile', passport.authenticate('jwt', { session: false }), (req, res) => {
+router.get('/:email/profile', passport.authenticate('jwt', { session: false }), (req, res, next) => {
     const email = req.params.email;
     dbPool.query('SELECT name, lastname FROM users WHERE email=?', [email], (error, result) => {
         if (error) {
-            res.status(500).json({ flash: error.message }).end();
+            next(error);
         } else if (!result.length) {
-            res.status(404).json({ flash: `User '${email}' not found` }).end();
+            res.json(404, { flash: `User '${email}' not found` });
         } else {
-            res.json(result[0]).end();
+            res.json(result[0]);
         }
     });
 });
