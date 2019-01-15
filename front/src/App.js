@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect, Link } from 'react-router-dom';
 import { createStore } from 'redux';
-import { Provider } from 'react-redux';
+import { Provider, connect } from 'react-redux';
 
 import Signin from './containers/Signin';
 import Signup from './containers/Signup';
@@ -11,15 +11,19 @@ import requireAuth from './hoc/requireAuth';
 
 const store = createStore(reducers);
 
+const DefaultRedirect = connect(({ auth }) => ({ authenticated: Boolean(auth.user) }))(
+    ({ authenticated }) => <Redirect to={authenticated ? '/profile' : '/signin'} />
+);
+
 export default () => (
     <React.StrictMode>
         <Provider store={store}>
             <Router>
                 <Switch>
-                    <Redirect exact from="/" to="/signin" />
-                    <Route path="/signin" component={Signin} />
-                    <Route path="/signup" component={Signup} />
+                    <Route exact path="/" component={DefaultRedirect} />
                     <Route path="/profile" component={requireAuth(Profile)} />
+                    <Route path="/signin" component={requireAuth(Signin, false)} />
+                    <Route path="/signup" component={requireAuth(Signup, false)} />
                     <Route render={({ location }) => <>
                         <p>The requested URL <code>{location.pathname}</code> was not found.</p>
                         <p><Link to="/">Home</Link></p>
