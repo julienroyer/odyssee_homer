@@ -15,7 +15,7 @@ export default connect(({ auth }) => auth)(class Profile extends React.Component
         ).catch(err => this.setState({ flash: `Request failure (${err.message})` }));
     }
 
-    logout = () => { this.props.history.push('/') }
+    logout = () => { this.props.dispatch({ type: "LOGOUT" }) }
 
     render() {
         const email = this.props.user.email, { flash, profile, } = this.state;
