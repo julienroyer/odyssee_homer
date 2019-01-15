@@ -1,17 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { login } from '../actions/auth';
 
-export default connect()(class Signin extends React.Component {
+export default connect(null, { login })(class Signin extends React.Component {
     state = { flash: '', fields: {}, };
-
-    onLogin(obj) {
-        this.props.dispatch({
-            type: "LOGIN",
-            user: { email: obj.user.email, token: obj.token, },
-        });
-        this.props.history.push('/profile');
-    }
 
     onInput = e => (t => this.setState({ fields: { ...this.state.fields, [t.name]: t.value } }))(e.target);
 
@@ -27,7 +20,7 @@ export default connect()(class Signin extends React.Component {
                 body: JSON.stringify(fields),
             }
         ).then(res => res.json().then(
-            obj => res.ok ? this.onLogin(obj) : this.setState({ flash: obj.flash || 'Unknown error' }),
+            obj => res.ok ? this.props.login({ email: obj.user.email, token: obj.token }) : this.setState({ flash: obj.flash || 'Unknown error' }),
             () => this.setState({ flash: `Request failure (HTTP ${res.status})` }))
         ).catch(err => this.setState({ flash: `Request failure (${err.message})` }));
     };
