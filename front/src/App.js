@@ -3,9 +3,9 @@ import { BrowserRouter as Router, Switch, Route, Redirect, Link } from 'react-ro
 import { createStore } from 'redux';
 import { Provider, connect } from 'react-redux';
 
-import Signin from './containers/Signin';
-import Signup from './containers/Signup';
-import Profile from './containers/Profile';
+import Signin from './components/Signin';
+import Signup from './components/Signup';
+import Profile from './components/Profile';
 import reducers from './reducers';
 import requireAuth from './hoc/requireAuth';
 
@@ -15,7 +15,7 @@ const DefaultRedirect = connect(({ auth }) => ({ authenticated: Boolean(auth.use
     ({ authenticated }) => <Redirect to={authenticated ? '/profile' : '/signin'} />
 );
 
-export default () => (
+const App = () => (
     <React.StrictMode>
         <Provider store={store}>
             <Router>
@@ -33,3 +33,5 @@ export default () => (
         </Provider>
     </React.StrictMode>
 );
+
+export default App;

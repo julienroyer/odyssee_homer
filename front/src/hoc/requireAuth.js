@@ -2,7 +2,9 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-export default requireAuth = (Component, requireAuth = true) => connect(({ auth }) => ({ authenticated: Boolean(auth.user) }))(
+const requireAuth = (Component, mustBeAuthenticated = true) => connect(({ auth }) => ({ authenticated: Boolean(auth.user) }))(
     ({ authenticated, ...rest }) =>
-        (authenticated === Boolean(requireAuth)) ? <Component {...rest} /> : <Redirect to="/" />
-); 
+        (Boolean(authenticated) === Boolean(mustBeAuthenticated)) ? <Component {...rest} /> : <Redirect to="/" />
+);
+
+export default requireAuth;
