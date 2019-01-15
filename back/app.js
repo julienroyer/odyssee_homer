@@ -12,14 +12,14 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname + '/public'));
 
 app.get("/", (_req, res) => res.send('Welcome'));
-app.use('/auth', authRouter);
-app.use('/user', userRouter);
+app.use('/api/auth', authRouter);
+app.use('/api/user', userRouter);
 app.use((_req, _res, next) => {
     const err = new Error('Not Found');
     err.status = 404;
     next(err);
 });
-app.use((err, _req, res, _next) => {
+app.use('/api', (err, _req, res, _next) => {
     // TODO
     res.json(500, { flash: String(err.message) });
 });

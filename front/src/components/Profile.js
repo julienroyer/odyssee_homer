@@ -6,7 +6,7 @@ class Profile extends React.Component {
     state = { profile: {}, };
 
     componentDidMount() {
-        fetch(`/user/${this.props.user.email}/profile`, {
+        fetch(`/api/user/${this.props.user.email}/profile`, {
             headers: new Headers({
                 Authorization: `Bearer ${this.props.user.token}`,
             }),

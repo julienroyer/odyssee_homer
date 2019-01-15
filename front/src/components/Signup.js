@@ -12,7 +12,7 @@ export default class Signup extends React.Component {
         if (passwordbis !== fields.password) {
             this.setState({ flash: `'Password' and 'Password bis' must be the same.` })
         } else {
-            fetch("/auth/signup",
+            fetch("/api/auth/signup",
                 {
                     method: 'POST',
                     headers: new Headers({

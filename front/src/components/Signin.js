@@ -11,7 +11,7 @@ class Signin extends React.Component {
     onSubmit = e => {
         e.preventDefault();
         const { fields, } = this.state;
-        fetch("/auth/signin",
+        fetch("/api/auth/signin",
             {
                 method: 'POST',
                 headers: new Headers({
