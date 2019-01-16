@@ -18,9 +18,11 @@ app.use((req, _res, next) =>
     next(exceptions.notFound(`the requested URL '${req.originalUrl}' was not found`)));
 
 app.use('/api', (err, _req, res, _next) => {
+    console.error('API exception', err);
+
     if (!res.headersSent) {
-        console.error('API exception', err);
-        res.status(err.httpStatus || 500).json({ flash: String(err.message) });
+        res.status(err.httpStatus || 500).
+            json({ flash: String((err.httpStatus && err.message) || 'API exception') });
     }
 });
 

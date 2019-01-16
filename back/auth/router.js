@@ -4,35 +4,36 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const dbPool = require('../db/pool');
 const { safeAsync } = require('../helpers/middlewares');
+const exceptions = require('../exceptions');
 
 const router = express.Router();
 
-router.post('/signup', safeAsync(async (req, res) => {
+router.post('/signup', safeAsync(async (req, res, next) => {
     const values = ['email', 'password', 'name', 'lastname'].reduce((a, v) => {
         const val = req.body[v];
         if (!(a[v] = (val && String(val).trim()))) {
-            throw new Error(`missing '${v}' parameter`);
+            throw exceptions.badRequest(`missing '${v}' parameter`);
         }
         return a;
     }, {});
     values.password = await bcrypt.hash(values.password, 10);
     dbPool.query('INSERT INTO users SET ?', values, error => {
         if (error) {
-            res.status(500).json({ flash: error.message }).end();
+            next(error);
         } else {
             res.json({ flash: 'User has been signed up!' }).end();
         }
     });
 }));
 
-router.post('/signin', (req, res) => passport.authenticate('local', (error, user, info) => {
+router.post('/signin', (req, res, next) => passport.authenticate('local', (error, user, info) => {
     if (error) {
-        res.status(500).json({ flash: error.message }).end();
+        next(error);
     } else if (user) {
         const token = jwt.sign(user, 'your_jwt_secret');
         res.json({ flash: info, user, token, }).end();
     } else {
-        res.status(403).json({ flash: info, }).end();
+        next(exceptions.unauthorized(info));
     }
 })(req, res));
 
