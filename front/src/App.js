@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect, Link } from 'react-router-dom';
 import { createStore } from 'redux';
 import { Provider, connect } from 'react-redux';
-
 import Signin from './components/Signin';
 import Signup from './components/Signup';
 import Profile from './components/Profile';
