@@ -18,20 +18,20 @@ app.use((req, _res, next) =>
     next(exceptions.notFound(`the requested URL '${req.originalUrl}' was not found`)));
 
 app.use('/api', (err, _req, res, _next) => {
-    console.error('API exception', err);
+    console.error(err);
 
     if (!res.headersSent) {
-        const message = String((err.httpStatus && err.message) || 'API exception');
+        const message = String((err.httpStatus && err.message) || 'API error');
         res.status(err.httpStatus || 500).json({ flash: message });
     }
 });
 
 app.use((err, _req, res, _next) => {
-    console.error('Exception', err);
+    console.error(err);
 
     if (!res.headersSent) {
         const message = String((err.httpStatus && err.message) || '');
-        res.status(err.httpStatus || 500).send(`Exception${message ? ': ' + message : ''}`);
+        res.status(err.httpStatus || 500).send(`Error${message ? ': ' + message : ''}`);
     }
 });
 
