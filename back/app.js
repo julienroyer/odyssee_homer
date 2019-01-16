@@ -21,8 +21,17 @@ app.use('/api', (err, _req, res, _next) => {
     console.error('API exception', err);
 
     if (!res.headersSent) {
-        res.status(err.httpStatus || 500).
-            json({ flash: String((err.httpStatus && err.message) || 'API exception') });
+        const message = String((err.httpStatus && err.message) || 'API exception');
+        res.status(err.httpStatus || 500).json({ flash: message });
+    }
+});
+
+app.use((err, _req, res, _next) => {
+    console.error('Exception', err);
+
+    if (!res.headersSent) {
+        const message = String((err.httpStatus && err.message) || '');
+        res.status(err.httpStatus || 500).send(`Exception${message ? ': ' + message : ''}`);
     }
 });
 
