@@ -4,7 +4,7 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const userRouter = require('./user/router');
 const authRouter = require('./auth/router');
-const exceptions = require('./exceptions');
+const errors = require('./errors');
 
 [require('./auth/local-strategy'), require('./auth/jwt-strategy')].forEach(
     s => passport.use(s));
@@ -19,7 +19,7 @@ app.use(express.static(__dirname + '/public'));
 app.use('/api/auth', authRouter);
 app.use('/api/user', userRouter);
 app.use((req, _res, next) => {
-    next(exceptions.notFound(`the requested URL '${req.originalUrl}' was not found`));
+    next(errors.notFound(`the requested URL '${req.originalUrl}' was not found`));
 });
 
 app.use((err, _req, res, _next) => {

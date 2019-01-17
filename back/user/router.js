@@ -1,7 +1,7 @@
 const express = require('express');
 const passport = require('passport');
 const dbPool = require('../db/pool');
-const exceptions = require('../exceptions');
+const errors = require('../errors');
 
 const router = express.Router();
 
@@ -11,7 +11,7 @@ router.get('/:email/profile', passport.authenticate('jwt', { session: false }), 
         if (error) {
             next(error);
         } else if (!result.length) {
-            next(exceptions.notFound(`User '${email}' not found`));
+            next(errors.notFound(`User '${email}' not found`));
         } else {
             res.json(result[0]);
         }
