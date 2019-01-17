@@ -28,6 +28,8 @@ app.use((err, _req, res, _next) => {
     if (!res.headersSent) {
         const message = String((err.httpStatus && err.message) || defaultMsg);
         res.status(err.httpStatus || 500).json({ flash: message });
+    } else {
+        next(err);
     }
 });
 
