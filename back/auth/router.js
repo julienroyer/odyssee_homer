@@ -26,6 +26,7 @@ router.post('/signup', safeAsync(async (req, res, next) => {
     });
 }));
 
+// TODO use real secret or key
 router.post('/signin', (req, res, next) => passport.authenticate('local', (error, user, info) => {
     if (error) {
         next(error);

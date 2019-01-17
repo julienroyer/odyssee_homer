@@ -1,11 +1,9 @@
 const LocalStrategy = require('passport-local');
-const { ExtractJwt, Strategy: JwtStrategy } = require('passport-jwt');
 const bcrypt = require('bcrypt');
 const dbPool = require('../db/pool');
 
-const strategies = [];
-
-strategies.push(new LocalStrategy({ usernameField: 'email' }, (email, password, done) =>
+// TODO properly handle async
+module.exports = new LocalStrategy({ usernameField: 'email' }, (email, password, done) =>
     dbPool.query('SELECT password FROM users WHERE email=?', [email], async (error, result) => {
         if (error) {
             throw error;
@@ -19,14 +17,4 @@ strategies.push(new LocalStrategy({ usernameField: 'email' }, (email, password, 
             done(null, null, 'invalid credentials');
         }
     })
-));
-
-strategies.push(new JwtStrategy(
-    {
-        jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-        secretOrKey: 'your_jwt_secret'
-    },
-    (jwtPayload, cb) => cb(null, jwtPayload)
-));
-
-module.exports = strategies;
+);
