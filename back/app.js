@@ -23,7 +23,7 @@ app.use((req, _res, next) => {
 });
 
 app.use((err, _req, res, _next) => {
-    const defaultMsg = 'Server error';
+    const defaultMsg = 'server error';
     console.error(defaultMsg, err);
 
     if (!res.headersSent) {
