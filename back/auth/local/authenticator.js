@@ -9,7 +9,7 @@ module.exports = (req, res, next) => {
             res.locals.user = user;
             next();
         } else {
-            next(errors.unauthorized(info));
+            next(errors.unauthorized('invalid credentials'));
         }
     }))(req, res, next);
 };
