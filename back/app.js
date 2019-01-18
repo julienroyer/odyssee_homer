@@ -6,7 +6,7 @@ const userRouter = require('./user/router');
 const authRouter = require('./auth/router');
 const errors = require('./errors');
 
-[require('./auth/local-strategy'), require('./auth/jwt-strategy')].forEach(
+[require('./auth/local-strategy'), require('./auth/jwt/strategy')].forEach(
     s => passport.use(s));
 
 const app = express();
