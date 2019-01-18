@@ -19,9 +19,10 @@ router.post('/signup', asyncMiddleware(async (req, res, next) => {
     values.password = await bcrypt.hash(values.password, 10);
     dbPool.query('INSERT INTO users SET ?', values, error => {
         if (error) {
-            next(error);
+            next(error.code === 'ER_DUP_ENTRY' ?
+                errors.conflict(`this user already exists`, { causedBy: error }) : error);
         } else {
-            res.json({ flash: 'User has been signed up!' }).end();
+            res.json({ flash: 'you have signed up' }).end();
         }
     });
 }));
