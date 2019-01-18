@@ -2,14 +2,14 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
-const dbPool = require('../db/pool');
-const { asyncMiddleware } = require('../helpers/async-wrappers');
+const { asyncMiddleware, asyncMysqlQueryFn } = require('../helpers/async-wrappers');
+const asyncDbQuery = asyncMysqlQueryFn(require('../db/pool'));
 const errors = require('../errors');
 const jwtSecretOrKey = require('./jwt/secret-or-key');
 
 const router = express.Router();
 
-router.post('/signup', asyncMiddleware(async (req, res, next) => {
+router.post('/signup', asyncMiddleware(async (req, res) => {
     const values = ['email', 'password', 'name', 'lastname'].reduce((a, v) => {
         const val = req.body[v];
         if (!(a[v] = (val && String(val).trim()))) {
@@ -18,14 +18,12 @@ router.post('/signup', asyncMiddleware(async (req, res, next) => {
         return a;
     }, {});
     values.password = await bcrypt.hash(values.password, 10);
-    dbPool.query('INSERT INTO users SET ?', values, error => {
-        if (error) {
-            next(error.code === 'ER_DUP_ENTRY' ?
-                errors.conflict(`this user already exists`, { causedBy: error }) : error);
-        } else {
-            res.json({ flash: 'you have signed up' });
-        }
-    });
+    try {
+        await asyncDbQuery('INSERT INTO users SET ?', values);
+    } catch (e) {
+        throw e.code === 'ER_DUP_ENTRY' ? errors.conflict(`this user already exists`, { causedBy: e }) : e;
+    }
+    res.json({ flash: 'you have signed up' });
 }));
 
 router.post('/signin', (req, res, next) => passport.authenticate('local', (error, user, info) => {
