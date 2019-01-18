@@ -1,5 +1,5 @@
-const passport = require('passport');
 const express = require('express');
+const passport = require('passport');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const userRouter = require('./user/router');
