@@ -1,4 +1,4 @@
-const error = (name, httpStatus) => (message, { causedBy }) => {
+const error = (name, httpStatus) => (message, { causedBy } = {}) => {
     const res = Error(message);
     res.name = name;
     res.httpStatus = httpStatus;
