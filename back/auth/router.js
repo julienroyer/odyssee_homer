@@ -28,9 +28,9 @@ router.post('/signup', asyncMiddleware(async (req, res) => {
     res.json({ flash: 'you have signed up' });
 }));
 
-router.post('/signin', localAuth, ({ user }, res) => {
+router.post('/signin', localAuth, (_req, res) => {
     // TODO async
-    const token = jwt.sign(user, jwtSecretOrKey, { expiresIn: '1h' });
+    const token = jwt.sign(res.locals.user, jwtSecretOrKey, { expiresIn: '1h' });
     res.json({ user, token });
 });
 

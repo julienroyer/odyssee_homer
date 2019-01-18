@@ -6,7 +6,7 @@ module.exports = (req, res, next) => {
         if (error) {
             next(error);
         } else if (user) {
-            req.user = user;
+            res.locals.user = user;
             next();
         } else {
             next(errors.unauthorized(info));
