@@ -9,8 +9,8 @@ const localAuth = require('./local/authenticator');
 
 const router = express.Router();
 
-const asyncDbQuery = asyncFn(dbPool.query.bind(dbPool));
-const asyncJwtSign = asyncFn(jwt.sign.bind(jwt));
+const asyncJwtSign = asyncFn(jwt.sign);
+const asyncDbQuery = asyncFn((...args) => dbPool.query(...args));
 
 router.post('/signup', asyncMw(async (req, res) => {
     const values = ['email', 'password', 'name', 'lastname'].reduce((a, v) => {
