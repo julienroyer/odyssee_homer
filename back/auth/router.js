@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const dbPool = require('../db/pool');
 const { asyncMiddleware } = require('../helpers/async-wrappers');
 const errors = require('../errors');
+const jwtSecretOrKey = require('./jwt/secret-or-key');
 
 const router = express.Router();
 
@@ -27,12 +28,11 @@ router.post('/signup', asyncMiddleware(async (req, res, next) => {
     });
 }));
 
-// TODO use real secret or key
 router.post('/signin', (req, res, next) => passport.authenticate('local', (error, user, info) => {
     if (error) {
         next(error);
     } else if (user) {
-        const token = jwt.sign(user, 'your_jwt_secret');
+        const token = jwt.sign(user, jwtSecretOrKey);
         res.json({ flash: info, user, token, }).end();
     } else {
         next(errors.unauthorized(info));
