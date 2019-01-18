@@ -2,6 +2,7 @@ const LocalStrategy = require('passport-local');
 const bcrypt = require('bcrypt');
 const dbPool = require('../../db/pool');
 const { asyncMw, asyncFn } = require('../../util/async-wrappers');
+
 const asyncDbQuery = asyncFn((...args) => dbPool.query(...args));
 
 module.exports = new LocalStrategy({ usernameField: 'email' }, asyncMw(async (email, password, done) => {
