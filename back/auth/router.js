@@ -1,7 +1,7 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { asyncMiddleware, asyncFn } = require('../util/async-wrappers');
+const { asyncMw, asyncFn } = require('../util/async-wrappers');
 const dbPool = require('../db/pool');
 const errors = require('../errors');
 const jwtSecretOrKey = require('./jwt/secret-or-key');
@@ -12,7 +12,7 @@ const router = express.Router();
 const asyncDbQuery = asyncFn(dbPool.query.bind(dbPool));
 const asyncJwtSign = asyncFn(jwt.sign.bind(jwt));
 
-router.post('/signup', asyncMiddleware(async (req, res) => {
+router.post('/signup', asyncMw(async (req, res) => {
     const values = ['email', 'password', 'name', 'lastname'].reduce((a, v) => {
         const val = req.body[v];
         if (!(a[v] = (val && String(val).trim()))) {
@@ -31,7 +31,7 @@ router.post('/signup', asyncMiddleware(async (req, res) => {
     res.json({ flash: 'you have signed up' });
 }));
 
-router.post('/signin', localAuth, asyncMiddleware(async (_req, res) => {
+router.post('/signin', localAuth, asyncMw(async (_req, res) => {
     const token = await asyncJwtSign(res.locals.user, jwtSecretOrKey, { expiresIn: '1h' });
     res.json({ user: res.locals.user, token });
 }));
