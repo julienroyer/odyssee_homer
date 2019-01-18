@@ -1,6 +1,6 @@
 const LocalStrategy = require('passport-local');
 const bcrypt = require('bcrypt');
-const dbPool = require('../db/pool');
+const dbPool = require('../../db/pool');
 
 // TODO properly handle async
 module.exports = new LocalStrategy({ usernameField: 'email' }, (email, password, done) =>
