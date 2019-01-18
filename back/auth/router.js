@@ -1,7 +1,7 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { asyncMiddleware, asyncMysqlPool } = require('../helpers/async-wrappers');
+const { asyncMiddleware, asyncMysqlPool } = require('../util/async-wrappers');
 const dbPool = asyncMysqlPool(require('../db/pool'));
 const errors = require('../errors');
 const jwtSecretOrKey = require('./jwt/secret-or-key');
