@@ -3,12 +3,12 @@ const bcrypt = require('bcrypt');
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const dbPool = require('../db/pool');
-const { safeAsync } = require('../helpers/middlewares');
+const { asyncMiddleware } = require('../helpers/async-wrappers');
 const errors = require('../errors');
 
 const router = express.Router();
 
-router.post('/signup', safeAsync(async (req, res, next) => {
+router.post('/signup', asyncMiddleware(async (req, res, next) => {
     const values = ['email', 'password', 'name', 'lastname'].reduce((a, v) => {
         const val = req.body[v];
         if (!(a[v] = (val && String(val).trim()))) {
