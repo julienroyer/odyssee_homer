@@ -22,7 +22,7 @@ router.post('/signup', asyncMiddleware(async (req, res, next) => {
             next(error.code === 'ER_DUP_ENTRY' ?
                 errors.conflict(`this user already exists`, { causedBy: error }) : error);
         } else {
-            res.json({ flash: 'you have signed up' }).end();
+            res.json({ flash: 'you have signed up' });
         }
     });
 }));
