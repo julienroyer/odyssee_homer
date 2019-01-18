@@ -2,7 +2,7 @@ const error = (name, httpStatus) => (message, { causedBy } = {}) => {
     const res = Error(message);
     res.name = name;
     res.httpStatus = httpStatus;
-    res.causedBy = causedBy;
+    causedBy && (res.causedBy = causedBy);
     return res;
 };
 
