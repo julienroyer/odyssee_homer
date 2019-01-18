@@ -31,7 +31,7 @@ router.post('/signup', asyncMiddleware(async (req, res) => {
 router.post('/signin', localAuth, (_req, res) => {
     // TODO async
     const token = jwt.sign(res.locals.user, jwtSecretOrKey, { expiresIn: '1h' });
-    res.json({ user, token });
+    res.json({ user: res.locals.user, token });
 });
 
 module.exports = router;
