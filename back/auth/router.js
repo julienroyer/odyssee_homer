@@ -1,11 +1,11 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
-const passport = require('passport');
 const jwt = require('jsonwebtoken');
-const { asyncMiddleware, asyncMysqlQueryFn } = require('../helpers/async-wrappers');
-const asyncDbQuery = asyncMysqlQueryFn(require('../db/pool'));
+const { asyncMiddleware, asyncMysqlPool } = require('../helpers/async-wrappers');
+const dbPool = asyncMysqlPool(require('../db/pool'));
 const errors = require('../errors');
 const jwtSecretOrKey = require('./jwt/secret-or-key');
+const localAuth = require('./local/authenticator');
 
 const router = express.Router();
 
@@ -13,28 +13,25 @@ router.post('/signup', asyncMiddleware(async (req, res) => {
     const values = ['email', 'password', 'name', 'lastname'].reduce((a, v) => {
         const val = req.body[v];
         if (!(a[v] = (val && String(val).trim()))) {
-            throw errors.badRequest(`missing '${v}' parameter`);
+            throw errors.badRequest(`'${v}' value is empty`);
         }
         return a;
     }, {});
     values.password = await bcrypt.hash(values.password, 10);
     try {
-        await asyncDbQuery('INSERT INTO users SET ?', values);
+        await dbPool.asyncQuery('INSERT INTO users SET ?', values);
     } catch (e) {
-        throw e.code === 'ER_DUP_ENTRY' ? errors.conflict(`this user already exists`, { causedBy: e }) : e;
+        throw e.code === 'ER_DUP_ENTRY' ?
+            errors.conflict(`the user '${values.email}' already exists`, { causedBy: e }) :
+            e;
     }
     res.json({ flash: 'you have signed up' });
 }));
 
-router.post('/signin', (req, res, next) => passport.authenticate('local', (error, user, info) => {
-    if (error) {
-        next(error);
-    } else if (user) {
-        const token = jwt.sign(user, jwtSecretOrKey);
-        res.json({ flash: info, user, token, }).end();
-    } else {
-        next(errors.unauthorized(info));
-    }
-})(req, res));
+router.post('/signin', localAuth, ({ user }, res) => {
+    // TODO async
+    const token = jwt.sign(user, jwtSecretOrKey);
+    res.json({ user, token });
+});
 
 module.exports = router;

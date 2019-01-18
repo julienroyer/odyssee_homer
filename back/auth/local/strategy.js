@@ -12,7 +12,7 @@ module.exports = new LocalStrategy({ usernameField: 'email' }, (email, password,
         const match = await bcrypt.compare(password,
             entry ? entry.password : '$2b$10$TRUiCb7DnUDKN0544viAZ.cZNey36JuR3vxm7MjECG7yY9NR6HVeS');
         if (entry && match) {
-            done(null, { email }, 'user has been signed in!');
+            done(null, { email });
         } else {
             done(null, null, 'invalid credentials');
         }
