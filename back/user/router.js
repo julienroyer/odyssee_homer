@@ -2,20 +2,19 @@ const express = require('express');
 const dbPool = require('../db/pool');
 const errors = require('../errors');
 const jwtAuth = require('../auth/jwt/authenticator');
+const { asyncMw, asyncFn } = require('../util/async-wrappers');
+
+const asyncDbQuery = asyncFn((...args) => dbPool.query(...args));
 
 const router = express.Router();
 
-router.get('/:email/profile', jwtAuth, (req, res, next) => {
-    const email = req.params.email;
-    dbPool.query('SELECT name, lastname FROM users WHERE email=?', [email], (error, result) => {
-        if (error) {
-            next(error);
-        } else if (!result.length) {
-            next(errors.notFound(`User '${email}' not found`));
-        } else {
-            res.json(result[0]);
-        }
-    });
-});
+router.get('/:email/profile', jwtAuth, asyncMw(async ({ params }, res, next) => {
+    const [[profile]] = await asyncDbQuery('SELECT name, lastname FROM users WHERE email=?', params.email);
+    if (profile) {
+        res.json(profile);
+    } else {
+        next(errors.notFound(`User '${params.email}' not found`));
+    }
+}));
 
 module.exports = router;
