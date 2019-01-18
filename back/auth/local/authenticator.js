@@ -2,7 +2,7 @@ const passport = require('passport');
 const errors = require('../../errors');
 
 module.exports = (req, res, next) => {
-    passport.authenticate('local', { session: false }, ((error, user, info) => {
+    passport.authenticate('local', { session: false }, ((error, user) => {
         if (error) {
             next(error);
         } else if (user) {
