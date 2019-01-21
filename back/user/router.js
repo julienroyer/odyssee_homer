@@ -1,5 +1,5 @@
 const express = require('express');
-const dbPool = require('../db/pool');
+const dbPool = require('../helpers/db/pool');
 const errors = require('../errors');
 const jwtAuth = require('../auth/jwt/authenticator');
 const { asyncMw } = require('../helpers/async-wrappers');
