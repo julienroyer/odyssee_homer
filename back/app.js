@@ -22,7 +22,7 @@ app.use((req, _res, next) => {
 
 app.use((err, _req, res, _next) => {
     const defaultMsg = 'server error';
-    console.error(defaultMsg, err);
+    console.error(defaultMsg, err.printStack ? err : err.message);
 
     if (!res.headersSent) {
         const message = String((err.httpStatus && err.message) || defaultMsg);

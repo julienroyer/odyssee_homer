@@ -1,16 +1,11 @@
-const error = (name, httpStatus) => (message, { causedBy } = {}) => {
-    const res = Error(message);
-    res.name = name;
-    res.httpStatus = httpStatus;
-    causedBy && (res.causedBy = causedBy);
-    return res;
-};
+const error = defaultOptions => (message, options) =>
+    Object.assign(Error(message), defaultOptions, options);
 
-Object.entries({
-    badRequest: 400,
-    unauthorized: 401,
-    notFound: 404,
-    conflict: 409,
-}).forEach(([name, httpStatus]) => {
-    exports[name] = error(name, httpStatus);
+[
+    { name: 'badRequest', httpStatus: 400 },
+    { name: 'unauthorized', httpStatus: 401 },
+    { name: 'notFound', httpStatus: 404, printStack: false },
+    { name: 'conflict', httpStatus: 409 },
+].forEach(options => {
+    exports[options.name] = error(options);
 });
