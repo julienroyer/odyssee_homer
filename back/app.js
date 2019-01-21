@@ -4,7 +4,7 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const userRouter = require('./user/router');
 const authRouter = require('./auth/router');
-const errors = require('./errors');
+const errors = require('./helpers/errors');
 
 ['local', 'jwt'].forEach(name => passport.use(require(`./auth/${name}/strategy`)));
 

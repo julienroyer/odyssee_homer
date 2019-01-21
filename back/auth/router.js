@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const { asyncMw, asyncProxy } = require('../helpers/async-wrappers');
 const jwt = asyncProxy(require('jsonwebtoken'));
 const dbPool = require('../helpers/db/pool');
-const errors = require('../errors');
+const errors = require('../helpers/errors');
 const jwtSecretOrKey = require('./jwt/secret-or-key');
 const localAuth = require('./local/authenticator');
 
