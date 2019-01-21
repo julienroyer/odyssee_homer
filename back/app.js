@@ -22,13 +22,13 @@ app.use(asyncMw(async ({ originalUrl }) => {
     throw errors.notFound(`the requested URL '${originalUrl}' was not found`);
 }));
 
-app.use((err, req, res, _next) => {
+app.use((err, _req, res, _next) => {
     (err.log !== false) && console.error(err);
     if (!res.headersSent) {
         const message = String((err.httpStatus && err.message) || 'server error');
         res.status(err.httpStatus || 500).json({ message });
     } else {
-        req.socket.destroy();
+        res.end();
     }
 });
 
