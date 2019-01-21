@@ -2,7 +2,7 @@ const express = require('express');
 const dbPool = require('../db/pool');
 const errors = require('../errors');
 const jwtAuth = require('../auth/jwt/authenticator');
-const { asyncMw, asyncFn } = require('../util/async-wrappers');
+const { asyncMw, asyncFn } = require('../helpers/async-wrappers');
 
 const asyncDbQuery = asyncFn((...args) => dbPool.query(...args));
 

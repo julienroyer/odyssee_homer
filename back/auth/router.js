@@ -1,7 +1,7 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { asyncMw, asyncFn } = require('../util/async-wrappers');
+const { asyncMw, asyncFn } = require('../helpers/async-wrappers');
 const dbPool = require('../db/pool');
 const errors = require('../errors');
 const jwtSecretOrKey = require('./jwt/secret-or-key');
