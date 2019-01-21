@@ -1,14 +1,11 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const { asyncMw, asyncFn } = require('../helpers/async-wrappers');
+const { asyncMw, asyncProxy } = require('../helpers/async-wrappers');
+const jwt = asyncProxy(require('jsonwebtoken'));
 const dbPool = require('../db/pool');
 const errors = require('../errors');
 const jwtSecretOrKey = require('./jwt/secret-or-key');
 const localAuth = require('./local/authenticator');
-
-const asyncJwtSign = asyncFn(jwt.sign);
-const asyncDbQuery = asyncFn((...args) => dbPool.query(...args));
 
 const router = express.Router();
 
@@ -22,7 +19,7 @@ router.post('/signup', asyncMw(async (req, res) => {
     }, {});
     values.password = await bcrypt.hash(values.password, 10);
     try {
-        await asyncDbQuery('INSERT INTO users SET ?', values);
+        await dbPool.asyncQuery('INSERT INTO users SET ?', values);
     } catch (e) {
         throw e.code === 'ER_DUP_ENTRY' ?
             errors.conflict(`the user '${values.email}' already exists`, { causedBy: e }) :
@@ -32,7 +29,7 @@ router.post('/signup', asyncMw(async (req, res) => {
 }));
 
 router.post('/signin', localAuth, asyncMw(async (_req, res) => {
-    const token = await asyncJwtSign(res.locals.user, jwtSecretOrKey, { expiresIn: '1h' });
+    const token = await jwt.asyncSign(res.locals.user, jwtSecretOrKey, { expiresIn: '1h' });
     res.json({ user: res.locals.user, token });
 }));
 
