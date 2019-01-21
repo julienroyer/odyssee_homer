@@ -20,7 +20,7 @@ class Signin extends React.Component {
                 body: JSON.stringify(fields),
             }
         ).then(res => res.json().then(
-            obj => res.ok ? this.props.login({ email: obj.user.email, token: obj.token }) : this.setState({ flash: obj.flash || 'Unknown error' }),
+            obj => res.ok ? this.props.login({ email: obj.user.email, token: obj.token }) : this.setState({ flash: obj.message || 'Unknown error' }),
             () => this.setState({ flash: `Request failure (HTTP ${res.status})` }))
         ).catch(err => this.setState({ flash: `Request failure (${err.message})` }));
     };

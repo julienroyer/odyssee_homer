@@ -11,7 +11,7 @@ class Profile extends React.Component {
                 Authorization: `Bearer ${this.props.user.token}`,
             }),
         }).then(res => res.json().then(
-            obj => res.ok ? this.setState({ profile: obj }) : this.setState({ flash: obj.flash }),
+            obj => res.ok ? this.setState({ profile: obj }) : this.setState({ flash: obj.message }),
             () => this.setState({ flash: `Request failure (HTTP ${res.status})` }))
         ).catch(err => this.setState({ flash: `Request failure (${err.message})` }));
     }
