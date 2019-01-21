@@ -24,7 +24,7 @@ app.use(asyncMw(async ({ originalUrl }) => {
 
 app.use((err, _req, res, _next) => {
     if (res.headersSent) {
-        console.error('headers already sent', err);
+        console.error('Headers already sent', err);
         res.end();
     } else {
         (err.log !== false) && console.error(err);
