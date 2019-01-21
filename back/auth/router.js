@@ -7,7 +7,7 @@ const errors = require('../helpers/errors');
 const jwtSecretOrKey = require('./jwt/secret-or-key');
 const localAuth = require('./local/authenticator');
 
-const router = express.Router();
+const router = module.exports = exports = express.Router();
 
 router.post('/signup', asyncMw(async (req, res) => {
     const values = ['email', 'password', 'name', 'lastname'].reduce((a, v) => {
@@ -32,5 +32,3 @@ router.post('/signin', localAuth, asyncMw(async (_req, res) => {
     const token = await jwt.asyncSign(res.locals.user, jwtSecretOrKey, { expiresIn: '1h' });
     res.json({ user: res.locals.user, token });
 }));
-
-module.exports = router;
