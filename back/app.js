@@ -23,12 +23,13 @@ app.use(asyncMw(async ({ originalUrl }) => {
 }));
 
 app.use((err, _req, res, _next) => {
-    (err.log !== false) && console.error(err);
-    if (!res.headersSent) {
+    if (res.headersSent) {
+        console.error('headers already sent', err);
+        res.end();
+    } else {
+        (err.log !== false) && console.error(err);
         const message = String((err.httpStatus && err.message) || 'server error');
         res.status(err.httpStatus || 500).json({ message });
-    } else {
-        res.end();
     }
 });
 
