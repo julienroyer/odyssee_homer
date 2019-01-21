@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const userRouter = require('./user/router');
 const authRouter = require('./auth/router');
 const errors = require('./helpers/errors');
+const { asyncMw } = require('./helpers/async-wrappers');
 
 ['local', 'jwt'].forEach(name => passport.use(require(`./auth/${name}/strategy`)));
 
@@ -16,9 +17,9 @@ app.use(bodyParser.json());
 
 app.use('/api/auth', authRouter);
 app.use('/api/user', userRouter);
-app.use((req, _res, next) => {
-    next(errors.notFound(`the requested URL '${req.originalUrl}' was not found`));
-});
+app.use(asyncMw(async ({ originalUrl }) => {
+    throw errors.notFound(`the requested URL '${originalUrl}' was not found`);
+}));
 
 app.use((err, _req, res, _next) => {
     if (!res.headersSent) {
