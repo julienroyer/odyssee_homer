@@ -1,5 +1,5 @@
 const mysql = require('mysql');
-const { asyncProxy } = require('../helpers/async-wrappers');
+const { asyncProxy } = require('../async-wrappers');
 
 module.exports = asyncProxy(mysql.createPool({
     host: 'localhost',
