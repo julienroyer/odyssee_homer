@@ -21,11 +21,9 @@ app.use((req, _res, next) => {
 });
 
 app.use((err, _req, res, _next) => {
-    const defaultMsg = 'server error';
-    console.error(defaultMsg, err.printStack ? err : err.message);
-
     if (!res.headersSent) {
-        const message = String((err.httpStatus && err.message) || defaultMsg);
+        (err.log !== false) && console.error(err);
+        const message = String((err.httpStatus && err.message) || 'server error');
         res.status(err.httpStatus || 500).json({ flash: message });
     } else {
         next(err);

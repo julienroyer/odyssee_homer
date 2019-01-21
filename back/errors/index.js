@@ -4,7 +4,7 @@ const error = defaultOptions => (message, options) =>
 [
     { name: 'badRequest', httpStatus: 400 },
     { name: 'unauthorized', httpStatus: 401 },
-    { name: 'notFound', httpStatus: 404, printStack: false },
+    { name: 'notFound', httpStatus: 404, log: false },
     { name: 'conflict', httpStatus: 409 },
 ].forEach(options => {
     exports[options.name] = error(options);
