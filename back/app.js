@@ -27,7 +27,7 @@ app.use((err, _req, res, _next) => {
         console.error('Headers already sent', err);
         res.end();
     } else {
-        (err.log !== false) && console.error(err);
+        (!err.httpStatus || err.printLog) && console.error(err);
         const message = String((err.httpStatus && err.message) || 'server error');
         res.status(err.httpStatus || 500).json({ message });
     }
