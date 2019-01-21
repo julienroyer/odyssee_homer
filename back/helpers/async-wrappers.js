@@ -15,7 +15,7 @@ const asyncProxyHandler = {
         }
         prop = prop.substring(asyncPrefix.length);
         prop = prop[0].toLowerCase() + prop.substring(1);
-        return asyncFn((...params) => obj[prop](...params));
+        return prop in obj ? asyncFn((...params) => obj[prop](...params)) : undefined;
     }
 };
 
