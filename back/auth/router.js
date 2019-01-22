@@ -4,8 +4,8 @@ const { asyncMw, asyncProxy } = require('../helpers/async-wrappers');
 const jwt = asyncProxy(require('jsonwebtoken'));
 const dbPool = require('../helpers/db/pool');
 const errors = require('../helpers/errors');
-const jwtSecretOrKey = require('./jwt/secret-or-key');
-const localAuth = require('./local/authenticator');
+const jwtSecretOrKey = require('./passport/jwt/secret-or-key');
+const localAuth = require('./passport/local/authenticator');
 
 const router = module.exports = exports = express.Router();
 

@@ -1,13 +1,12 @@
 const express = require('express');
-const passport = require('passport');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const userRouter = require('./user/router');
 const authRouter = require('./auth/router');
 const errors = require('./helpers/errors');
-const { asyncMw } = require('./helpers/async-wrappers');
+const configurePassport = require('./auth/passport');
 
-['local', 'jwt'].forEach(name => passport.use(require(`./auth/${name}/strategy`)));
+configurePassport();
 
 const app = express();
 
@@ -18,9 +17,9 @@ app.use(bodyParser.json());
 app.use('/api/auth', authRouter);
 app.use('/api/user', userRouter);
 
-app.use(asyncMw(async ({ originalUrl }) => {
+app.use(({ originalUrl }) => {
     throw errors.notFound(`the requested URL '${originalUrl}' was not found`);
-}));
+});
 
 app.use((err, _req, res, _next) => {
     if (res.headersSent) {
