@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const userRouter = require('./user/router');
 const authRouter = require('./auth/router');
 const errors = require('./helpers/errors');
-const configurePassport = require('./auth/passport');
+const configurePassport = require('./auth/passport/configure');
 
 configurePassport();
 
