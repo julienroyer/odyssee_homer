@@ -1,7 +1,7 @@
 const LocalStrategy = require('passport-local');
 const bcrypt = require('bcrypt');
-const dbPool = require('../../helpers/db/pool');
-const { asyncMw } = require('../../helpers/async-wrappers');
+const dbPool = require('../../../helpers/db/pool');
+const { asyncMw } = require('../../../helpers/async-wrappers');
 
 module.exports = exports =
     new LocalStrategy({ usernameField: 'email' }, asyncMw(async (email, password, done) => {

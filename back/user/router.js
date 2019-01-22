@@ -1,7 +1,7 @@
 const express = require('express');
 const dbPool = require('../helpers/db/pool');
 const errors = require('../helpers/errors');
-const jwtAuth = require('../auth/jwt/authenticator');
+const jwtAuth = require('../auth/passport/jwt/authenticator');
 const { asyncMw } = require('../helpers/async-wrappers');
 
 const router = module.exports = exports = express.Router();
