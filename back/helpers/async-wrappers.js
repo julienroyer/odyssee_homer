@@ -6,7 +6,7 @@ const awaitablePrefix = 'awaitable';
 
 const awaitableProxyHandler = {
     get(obj, prop) {
-        if (!prop.startsWith(awaitablePrefix) || prop in obj) {
+        if (prop.length <= awaitablePrefix.length || !(prop.startsWith(awaitablePrefix)) || prop in obj) {
             return obj[prop];
         }
         prop = prop.substring(awaitablePrefix.length);
