@@ -10,12 +10,12 @@ const asyncPrefix = 'async';
 
 const asyncProxyHandler = {
     get(obj, prop) {
-        if (prop in obj || prop.length <= asyncPrefix.length || !(prop.startsWith(asyncPrefix))) {
+        if (prop.length <= asyncPrefix.length || !(prop.startsWith(asyncPrefix)) || prop in obj) {
             return obj[prop];
         }
         prop = prop.substring(asyncPrefix.length);
         prop = prop[0].toLowerCase() + prop.substring(1);
-        return prop in obj ? asyncFn((...params) => obj[prop](...params)) : undefined;
+        return prop in obj ? asyncFn(obj[prop].bind(obj)) : undefined;
     }
 };
 
