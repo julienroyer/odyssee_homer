@@ -11,9 +11,9 @@ class Profile extends React.Component {
             headers: new Headers({
                 Authorization: `Bearer ${this.props.user.token}`,
             })
-        }).
-            then(profile => this.setState({ profile })).
-            catch(({ message }) => this.setState({ flash: message }));
+        })
+            .then(profile => this.setState({ profile }))
+            .catch(({ message }) => this.setState({ flash: message }));
     }
 
     logout = () => this.props.logout();
