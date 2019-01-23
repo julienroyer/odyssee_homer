@@ -7,13 +7,14 @@ class Profile extends React.Component {
     state = { profile: {} };
 
     componentDidMount() {
-        myFetch(`/api/user/${this.props.user.email}/profile`, {
-            headers: new Headers({
-                Authorization: `Bearer ${this.props.user.token}`,
-            })
-        })
-            .then(profile => this.setState({ profile }))
-            .catch(({ message }) => this.setState({ flash: message }));
+        myFetch(`/api/user/${this.props.user.email}/profile`,
+            {
+                headers: new Headers({
+                    Authorization: `Bearer ${this.props.user.token}`,
+                })
+            }
+        ).then(profile => this.setState({ profile })
+        ).catch(({ message }) => this.setState({ flash: message }));
     }
 
     logout = () => this.props.logout();

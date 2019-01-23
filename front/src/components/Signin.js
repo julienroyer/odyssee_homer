@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { login } from '../actions/auth';
+import myFetch from '../helpers/fetch';
 
 class Signin extends React.Component {
     state = { fields: {} };
@@ -11,7 +12,7 @@ class Signin extends React.Component {
     onSubmit = e => {
         e.preventDefault();
         const { fields } = this.state;
-        fetch("/api/auth/signin",
+        myFetch('/api/auth/signin',
             {
                 method: 'POST',
                 headers: new Headers({
@@ -19,10 +20,8 @@ class Signin extends React.Component {
                 }),
                 body: JSON.stringify(fields),
             }
-        ).then(res => res.json().then(
-            obj => res.ok ? this.props.login({ email: obj.user.email, token: obj.token }) : this.setState({ flash: obj.message || 'unknown error' }),
-            () => this.setState({ flash: `Request failure (HTTP ${res.status})` }))
-        ).catch(err => this.setState({ flash: `Request failure (${err.message})` }));
+        ).then(res => this.props.login({ email: res.user.email, token: res.token })
+        ).catch(({ message }) => this.setState({ flash: message }));
     };
 
     render() {

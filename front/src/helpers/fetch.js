@@ -15,8 +15,8 @@ const myJson = async res => {
 };
 
 export default async (...args) => {
-    const res = myFetch(...args);
-    const json = myJson(res);
+    const res = await myFetch(...args);
+    const json = await myJson(res);
     if (!res.ok) {
         throw Error(json.message || 'request failure');
     }
