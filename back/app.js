@@ -18,7 +18,7 @@ app.use('/api/auth', authRouter);
 app.use('/api/user', userRouter);
 
 app.use(({ originalUrl }) => {
-    throw errors.notFound(`the requested URL '${originalUrl}' was not found`);
+    throw errors.notFound(`The requested URL '${originalUrl}' was not found.`);
 });
 
 app.use((err, _req, res, _next) => {
@@ -27,7 +27,7 @@ app.use((err, _req, res, _next) => {
         res.end();
     } else {
         (!err.httpStatus || err.printLog) && console.error(err);
-        const message = String((err.httpStatus && err.message) || 'server error');
+        const message = String((err.httpStatus && err.message) || 'Server error.');
         res.status(err.httpStatus || 500).json({ message });
     }
 });

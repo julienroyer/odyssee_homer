@@ -24,7 +24,7 @@ class Profile extends React.Component {
         return <>
             <button onClick={this.logout}>Log out</button>
             <h1>Profile</h1>
-            {Boolean(flash) && <p><mark>Flash: {flash}</mark></p>}
+            {Boolean(flash) && <p><mark>{flash}</mark></p>}
             <dl>
                 <dt>Email</dt>
                 <dd>{email}</dd>

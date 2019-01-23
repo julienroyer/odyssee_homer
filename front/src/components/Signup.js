@@ -33,7 +33,7 @@ export default class Signup extends React.Component {
             <form onSubmit={this.onSubmit} onChange={this.onChange}>
                 <h1>Sign up: {JSON.stringify(fields, undefined, 1)}</h1>
 
-                {Boolean(flash) && <p><mark>Flash: {flash}</mark></p>}
+                {Boolean(flash) && <p><mark>{flash}</mark></p>}
 
                 <p><label>Email<br /><input name="email" type="email" autoComplete="username" required /></label></p>
                 <p><label>Password<br /><input name="password" type="password" autoComplete="new-password" required /></label></p>

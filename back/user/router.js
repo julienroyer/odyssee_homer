@@ -9,7 +9,7 @@ const router = module.exports = exports = express.Router();
 router.get('/:email/profile', jwtAuth, asyncMw(async ({ params }, res) => {
     const [profile] = await dbPool.awaitableQuery('SELECT name, lastname FROM users WHERE email=?', params.email);
     if (!profile) {
-        throw errors.notFound(`user '${params.email}' not found`);
+        throw errors.notFound(`User '${params.email}' not found.`);
     }
     res.json(profile);
 }));

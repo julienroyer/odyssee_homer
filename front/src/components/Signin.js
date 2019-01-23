@@ -31,7 +31,7 @@ class Signin extends React.Component {
             <form onSubmit={this.onSubmit}>
                 <h1>Sign in: {JSON.stringify(fields, undefined, 1)}</h1>
 
-                {Boolean(flash) && <p><mark>Flash: {flash}</mark></p>}
+                {Boolean(flash) && <p><mark>{flash}</mark></p>}
 
                 <p><label>Email<br /><input name="email" type="email" autoComplete="username" required value={fields.email} onChange={this.onChange} /></label></p>
                 <p><label>Password<br /><input name="password" type="password" autoComplete="current-password" required value={fields.password} onChange={this.onChange} /></label></p>

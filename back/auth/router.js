@@ -13,7 +13,7 @@ router.post('/signup', asyncMw(async (req, res) => {
     const values = ['email', 'password', 'name', 'lastname'].reduce((a, v) => {
         const val = req.body[v];
         if (!(a[v] = (val && String(val).trim()))) {
-            throw errors.badRequest(`'${v}' value is empty`);
+            throw errors.badRequest(`'${v}' value is empty.`);
         }
         return a;
     }, {});
@@ -22,10 +22,10 @@ router.post('/signup', asyncMw(async (req, res) => {
         await dbPool.awaitableQuery('INSERT INTO users SET ?', values);
     } catch (e) {
         throw e.code === 'ER_DUP_ENTRY' ?
-            errors.conflict(`the user '${values.email}' already exists`, { causedBy: e }) :
+            errors.conflict(`The user '${values.email}' already exists.`, { causedBy: e }) :
             e;
     }
-    res.json({ message: 'you have signed up' });
+    res.json({ message: 'You have signed up!' });
 }));
 
 router.post('/signin', localAuth, asyncMw(async (_req, res) => {
