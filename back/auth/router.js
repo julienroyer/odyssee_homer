@@ -1,6 +1,6 @@
+const { asyncMw, asyncProxy } = require('../helpers/async-wrappers');
 const express = require('express');
 const bcrypt = require('bcrypt');
-const { asyncMw, asyncProxy } = require('../helpers/async-wrappers');
 const jwt = asyncProxy(require('jsonwebtoken'));
 const dbPool = require('../helpers/db/pool');
 const errors = require('../helpers/errors');
