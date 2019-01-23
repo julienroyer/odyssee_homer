@@ -4,13 +4,13 @@ import { connect } from 'react-redux';
 import { login } from '../actions/auth';
 
 class Signin extends React.Component {
-    state = { flash: '', fields: { email: '', password: '' } };
+    state = { fields: {} };
 
-    onChange = e => (t => this.setState({ fields: { ...this.state.fields, [t.name]: t.value } }))(e.target);
+    onChange = e => (t => this.setState({ fields: { ...this.state.fields, [t.name]: t.value.trim() } }))(e.target);
 
     onSubmit = e => {
         e.preventDefault();
-        const { fields, } = this.state;
+        const { fields } = this.state;
         fetch("/api/auth/signin",
             {
                 method: 'POST',
@@ -20,7 +20,7 @@ class Signin extends React.Component {
                 body: JSON.stringify(fields),
             }
         ).then(res => res.json().then(
-            obj => res.ok ? this.props.login({ email: obj.user.email, token: obj.token }) : this.setState({ flash: obj.message || 'Unknown error' }),
+            obj => res.ok ? this.props.login({ email: obj.user.email, token: obj.token }) : this.setState({ flash: obj.message || 'unknown error' }),
             () => this.setState({ flash: `Request failure (HTTP ${res.status})` }))
         ).catch(err => this.setState({ flash: `Request failure (${err.message})` }));
     };
@@ -32,7 +32,7 @@ class Signin extends React.Component {
             <form onSubmit={this.onSubmit}>
                 <h1>Sign in: {JSON.stringify(fields, undefined, 1)}</h1>
 
-                {Boolean(flash) && <p><mark>{flash}</mark></p>}
+                {Boolean(flash) && <p><mark>Flash: {flash}</mark></p>}
 
                 <p><label>Email<br /><input name="email" type="email" autoComplete="username" required value={fields.email} onChange={this.onChange} /></label></p>
                 <p><label>Password<br /><input name="password" type="password" autoComplete="current-password" required value={fields.password} onChange={this.onChange} /></label></p>

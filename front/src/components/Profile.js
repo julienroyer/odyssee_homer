@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { logout } from '../actions/auth';
 
 class Profile extends React.Component {
-    state = { profile: {}, };
+    state = { profile: {} };
 
     componentDidMount() {
         fetch(`/api/user/${this.props.user.email}/profile`, {
@@ -19,7 +19,7 @@ class Profile extends React.Component {
     logout = () => this.props.logout();
 
     render() {
-        const email = this.props.user.email, { flash, profile, } = this.state;
+        const email = this.props.user.email, { flash, profile } = this.state;
         return <>
             <button onClick={this.logout}>Log out</button>
             <h1>Profile</h1>
