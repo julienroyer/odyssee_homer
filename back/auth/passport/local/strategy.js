@@ -1,3 +1,5 @@
+"use strict";
+
 const LocalStrategy = require('passport-local');
 const bcrypt = require('bcrypt');
 const dbPool = require('../../../helpers/db/pool');

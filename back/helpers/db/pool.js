@@ -1,3 +1,5 @@
+"use strict";
+
 const mysql = require('mysql');
 const { awaitable } = require('../async-wrappers');
 

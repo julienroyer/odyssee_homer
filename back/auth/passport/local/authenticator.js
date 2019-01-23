@@ -1,3 +1,5 @@
+"use strict";
+
 const passport = require('passport');
 const errors = require('../../../helpers/errors');
 

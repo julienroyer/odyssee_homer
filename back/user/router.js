@@ -1,3 +1,5 @@
+"use strict";
+
 const express = require('express');
 const dbPool = require('../helpers/db/pool');
 const errors = require('../helpers/errors');
