@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 module.exports = exports = () => {
     const passport = require('passport');

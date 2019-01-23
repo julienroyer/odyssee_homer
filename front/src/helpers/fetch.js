@@ -1,3 +1,5 @@
+'use strict';
+
 const jsonNoThrow = async res => {
     try {
         return await res.json();

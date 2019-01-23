@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 const { asyncMw, awaitable } = require('../helpers/async-wrappers');
 const express = require('express');

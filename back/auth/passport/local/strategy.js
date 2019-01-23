@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 const LocalStrategy = require('passport-local');
 const bcrypt = require('bcrypt');

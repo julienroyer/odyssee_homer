@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 const error = defaultOptions => (message, options) =>
     Object.assign(Error(message), defaultOptions, options);

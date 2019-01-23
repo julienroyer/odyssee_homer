@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 const { ExtractJwt, Strategy: JwtStrategy } = require('passport-jwt');
 const secretOrKey = require('./secret-or-key');
