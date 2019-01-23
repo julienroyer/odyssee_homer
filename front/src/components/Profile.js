@@ -1,26 +1,19 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { logout } from '../actions/auth';
+import myFetch from '../helpers/fetch';
 
 class Profile extends React.Component {
     state = { profile: {} };
 
-    async componentDidMount() {
-        try {
-            const res = await fetch(`/api/user/${this.props.user.email}/profile`, {
-                headers: new Headers({
-                    Authorization: `Bearer ${this.props.user.token}`,
-                })
-            });
-            try {
-                const obj = await res.json();
-                res.ok ? this.setState({ profile: obj }) : this.setState({ flash: obj.message })
-            } catch (e) {
-                this.setState({ flash: `request failure - HTTP ${res.status}` })
-            }
-        } catch ({ message }) {
-            this.setState({ flash: `request failure${message ? ` (${message})` : ''}` });
-        }
+    componentDidMount() {
+        myFetch(`/api/user/${this.props.user.email}/profile`, {
+            headers: new Headers({
+                Authorization: `Bearer ${this.props.user.token}`,
+            })
+        }).
+            then(profile => this.setState({ profile })).
+            catch(({ message }) => this.setState({ flash: message }));
     }
 
     logout = () => this.props.logout();
