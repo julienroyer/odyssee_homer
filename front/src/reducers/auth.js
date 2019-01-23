@@ -1,8 +1,8 @@
 export default (state = {}, action) => {
     switch (action.type) {
-        case "LOGIN":
+        case 'LOGIN':
             return { ...state, user: action.user };
-        case "LOGOUT": {
+        case 'LOGOUT': {
             const { user, ...rest } = state;
             return rest;
         }

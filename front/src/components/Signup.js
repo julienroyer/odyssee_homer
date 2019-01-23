@@ -29,19 +29,18 @@ export default class Signup extends React.Component {
 
     render() {
         const { flash, fields, } = this.state;
-        const val = name => fields[name] || '';
         return <>
             <p><Link to="/signin">Sign in</Link></p>
             <form onSubmit={this.onSubmit}>
                 <h1>Sign up: {JSON.stringify(fields, undefined, 1)}</h1>
 
-                {flash ? <p><mark>{flash}</mark></p> : ''}
+                {flash ? <p><mark>Flash: {flash}</mark></p> : ''}
 
-                <p><label>Email<br /><input name="email" type="email" autoComplete="username" required value={val('email')} onChange={this.onChange} /></label></p>
-                <p><label>Password<br /><input name="password" type="password" autoComplete="new-password" required value={val('password')} onChange={this.onChange} /></label></p>
-                <p><label>Password bis<br /><input name="passwordbis" type="password" autoComplete="new-password" required value={val('passwordbis')} onChange={this.onChange} /></label></p>
-                <p><label>Name<br /><input name="name" value={val('name')} onChange={this.onChange} required /></label></p>
-                <p><label>Last name<br /><input name="lastname" value={val('lastname')} onChange={this.onChange} required /></label></p>
+                <p><label>Email<br /><input name="email" type="email" autoComplete="username" required onChange={this.onChange} /></label></p>
+                <p><label>Password<br /><input name="password" type="password" autoComplete="new-password" required onChange={this.onChange} /></label></p>
+                <p><label>Password bis<br /><input name="passwordbis" type="password" autoComplete="new-password" required onChange={this.onChange} /></label></p>
+                <p><label>Name<br /><input name="name" onChange={this.onChange} required /></label></p>
+                <p><label>Last name<br /><input name="lastname" onChange={this.onChange} required /></label></p>
                 <p><input type="submit" value="Submit" /></p>
             </form>
         </>;
