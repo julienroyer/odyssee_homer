@@ -1,22 +1,18 @@
+const { promisify } = require('util');
+
 exports.asyncMw = fn => (...args) => Promise.resolve(fn(...args)).catch(args[args.length - 1]);
 
-const asyncFn = exports.asyncFn = fn => (...params) => new Promise((resolve, reject) => {
-    fn(...params, (error, ...rest) => {
-        error ? reject(error) : resolve(rest);
-    });
-});
+const awaitablePrefix = 'awaitable';
 
-const asyncPrefix = 'async';
-
-const asyncProxyHandler = {
+const awaitableProxyHandler = {
     get(obj, prop) {
-        if (prop.length <= asyncPrefix.length || !(prop.startsWith(asyncPrefix)) || prop in obj) {
+        if (prop.length <= awaitablePrefix.length || !(prop.startsWith(awaitablePrefix)) || prop in obj) {
             return obj[prop];
         }
-        prop = prop.substring(asyncPrefix.length);
+        prop = prop.substring(awaitablePrefix.length);
         prop = prop[0].toLowerCase() + prop.substring(1);
-        return prop in obj ? asyncFn(obj[prop].bind(obj)) : undefined;
+        return prop in obj ? promisify(obj[prop]) : undefined;
     }
 };
 
-exports.asyncProxy = obj => new Proxy(obj, asyncProxyHandler);
+exports.awaitable = obj => new Proxy(obj, awaitableProxyHandler);

@@ -7,7 +7,7 @@ const { asyncMw } = require('../helpers/async-wrappers');
 const router = module.exports = exports = express.Router();
 
 router.get('/:email/profile', jwtAuth, asyncMw(async ({ params }, res) => {
-    const [[profile]] = await dbPool.asyncQuery('SELECT name, lastname FROM users WHERE email=?', params.email);
+    const [profile] = await dbPool.awaitableQuery('SELECT name, lastname FROM users WHERE email=?', params.email);
     if (!profile) {
         throw errors.notFound(`user '${params.email}' not found`);
     }

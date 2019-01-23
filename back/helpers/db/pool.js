@@ -1,7 +1,7 @@
 const mysql = require('mysql');
-const { asyncProxy } = require('../async-wrappers');
+const { awaitable } = require('../async-wrappers');
 
-module.exports = exports = asyncProxy(mysql.createPool({
+module.exports = exports = awaitable(mysql.createPool({
     host: 'localhost',
     user: 'julien',
     password: 'marcelmarcel',

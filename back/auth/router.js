@@ -1,7 +1,7 @@
-const { asyncMw, asyncProxy } = require('../helpers/async-wrappers');
+const { asyncMw, awaitable } = require('../helpers/async-wrappers');
 const express = require('express');
 const bcrypt = require('bcrypt');
-const jwt = asyncProxy(require('jsonwebtoken'));
+const jwt = awaitable(require('jsonwebtoken'));
 const dbPool = require('../helpers/db/pool');
 const errors = require('../helpers/errors');
 const jwtSecretOrKey = require('./passport/jwt/secret-or-key');
@@ -19,7 +19,7 @@ router.post('/signup', asyncMw(async (req, res) => {
     }, {});
     values.password = await bcrypt.hash(values.password, 10);
     try {
-        await dbPool.asyncQuery('INSERT INTO users SET ?', values);
+        await dbPool.awaitableQuery('INSERT INTO users SET ?', values);
     } catch (e) {
         throw e.code === 'ER_DUP_ENTRY' ?
             errors.conflict(`the user '${values.email}' already exists`, { causedBy: e }) :
@@ -29,6 +29,6 @@ router.post('/signup', asyncMw(async (req, res) => {
 }));
 
 router.post('/signin', localAuth, asyncMw(async (_req, res) => {
-    const token = await jwt.asyncSign(res.locals.user, jwtSecretOrKey, { expiresIn: '1h' });
+    const token = await jwt.awaitableSign(res.locals.user, jwtSecretOrKey, { expiresIn: '1h' });
     res.json({ user: res.locals.user, token });
 }));
