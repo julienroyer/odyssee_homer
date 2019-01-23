@@ -1,24 +1,15 @@
-const myFetch = async (...args) => {
-    try {
-        return await fetch(...args);
-    } catch ({ message }) {
-        throw Error(`Unable to reach the server. ${message}`);
-    }
-};
-
-const myJson = async res => {
+const jsonNoThrow = async res => {
     try {
         return await res.json();
-    } catch (e) {
-        throw Error(`Request failure - HTTP ${res.status}.`);
+    } catch (_) {
     }
-};
+}
 
 export default async (...args) => {
-    const res = await myFetch(...args);
-    const json = await myJson(res);
-    if (!res.ok) {
-        throw Error(json.message || 'Request failure');
+    const res = await fetch(...args);
+    const json = await jsonNoThrow(res);
+    if (!res.ok || !json) {
+        throw Error(String((json && json.message) || `Request failure (HTTP ${res.status}).`));
     }
     return json;
 };

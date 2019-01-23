@@ -25,16 +25,16 @@ class Signin extends React.Component {
     };
 
     render() {
-        const { flash, fields, } = this.state;
+        const { flash, fields } = this.state;
         return <>
             <p><Link to="/signup">Sign up</Link></p>
-            <form onSubmit={this.onSubmit}>
+            <form onSubmit={this.onSubmit} onChange={this.onChange}>
                 <h1>Sign in: {JSON.stringify(fields, undefined, 1)}</h1>
 
                 {Boolean(flash) && <p><mark>{flash}</mark></p>}
 
-                <p><label>Email<br /><input name="email" type="email" autoComplete="username" required value={fields.email} onChange={this.onChange} /></label></p>
-                <p><label>Password<br /><input name="password" type="password" autoComplete="current-password" required value={fields.password} onChange={this.onChange} /></label></p>
+                <p><label>Email<br /><input name="email" type="email" autoComplete="username" required /></label></p>
+                <p><label>Password<br /><input name="password" type="password" autoComplete="current-password" required /></label></p>
                 <p><input type="submit" value="Submit" /></p>
             </form>
         </>;
