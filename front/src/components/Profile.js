@@ -5,15 +5,22 @@ import { logout } from '../actions/auth';
 class Profile extends React.Component {
     state = { profile: {} };
 
-    componentDidMount() {
-        fetch(`/api/user/${this.props.user.email}/profile`, {
-            headers: new Headers({
-                Authorization: `Bearer ${this.props.user.token}`,
-            }),
-        }).then(res => res.json().then(
-            obj => res.ok ? this.setState({ profile: obj }) : this.setState({ flash: obj.message }),
-            () => this.setState({ flash: `request failure - HTTP ${res.status}` }))
-        ).catch(err => this.setState({ flash: `request failure (${err.message})` }));
+    async componentDidMount() {
+        try {
+            const res = await fetch(`/api/user/${this.props.user.email}/profile`, {
+                headers: new Headers({
+                    Authorization: `Bearer ${this.props.user.token}`,
+                })
+            });
+            try {
+                const obj = await res.json();
+                res.ok ? this.setState({ profile: obj }) : this.setState({ flash: obj.message })
+            } catch (e) {
+                this.setState({ flash: `request failure - HTTP ${res.status}` })
+            }
+        } catch ({ message }) {
+            this.setState({ flash: `request failure${message ? ` (${message})` : ''}` });
+        }
     }
 
     logout = () => this.props.logout();
