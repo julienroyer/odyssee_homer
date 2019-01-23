@@ -25,7 +25,7 @@ router.post('/signup', asyncMw(async (req, res) => {
             errors.conflict(`the user '${values.email}' already exists`, { causedBy: e }) :
             e;
     }
-    res.json({ flash: 'you have signed up' });
+    res.json({ message: 'you have signed up' });
 }));
 
 router.post('/signin', localAuth, asyncMw(async (_req, res) => {
