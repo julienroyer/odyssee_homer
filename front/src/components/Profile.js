@@ -33,4 +33,6 @@ class Profile extends React.Component {
     }
 }
 
-export default connect(({ auth }) => auth, { logout })(Profile);
+export default connect(({ auth }) => auth, { logout })(
+    props => <Profile key={props.user.email} {...props} />
+);
