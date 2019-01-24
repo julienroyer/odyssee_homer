@@ -9,10 +9,8 @@ const errors = require('../helpers/errors');
 const jwtSecretOrKey = require('./passport/jwt/secret-or-key');
 const localAuth = require('./passport/local/authenticator');
 
-module.exports = exports = () => {
-    const router = express.Router();
-
-    router.post('/signup', asyncMw(async (req, res) => {
+module.exports = () => express.Router()
+    .post('/signup', asyncMw(async (req, res) => {
         const values = ['email', 'password', 'name', 'lastname'].reduce((a, v) => {
             const val = req.body[v];
             if (!(a[v] = (val && String(val).trim()))) {
@@ -29,12 +27,8 @@ module.exports = exports = () => {
                 e;
         }
         res.json({ message: 'You have signed up!' });
-    }));
-
-    router.post('/signin', localAuth, asyncMw(async (_req, res) => {
+    }))
+    .post('/signin', localAuth, asyncMw(async (_req, res) => {
         const token = await jwt.awaitableSign(res.locals.user, jwtSecretOrKey, { expiresIn: '1h' });
         res.json({ ...res.locals.user, token });
     }));
-
-    return router;
-};

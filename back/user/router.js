@@ -6,10 +6,8 @@ const errors = require('../helpers/errors');
 const jwtAuth = require('../auth/passport/jwt/authenticator');
 const { asyncMw } = require('../helpers/async-wrappers');
 
-module.exports = exports = () => {
-    const router = express.Router();
-
-    router.get('/:email/profile', jwtAuth, asyncMw(async ({ params }, res) => {
+module.exports = () => express.Router()
+    .get('/:email/profile', jwtAuth, asyncMw(async ({ params }, res) => {
         const [profile] = await dbPool.awaitableQuery(
             'SELECT name, lastname FROM users WHERE email=?', params.email);
         if (!profile) {
@@ -17,6 +15,3 @@ module.exports = exports = () => {
         }
         res.json(profile);
     }));
-
-    return router;
-};
