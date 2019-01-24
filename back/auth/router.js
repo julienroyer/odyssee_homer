@@ -33,7 +33,7 @@ module.exports = exports = () => {
 
     router.post('/signin', localAuth, asyncMw(async (_req, res) => {
         const token = await jwt.awaitableSign(res.locals.user, jwtSecretOrKey, { expiresIn: '1h' });
-        res.json({ user: res.locals.user, token });
+        res.json({ ...res.locals.user, token });
     }));
 
     return router;

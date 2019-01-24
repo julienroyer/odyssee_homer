@@ -12,7 +12,7 @@ class Signin extends React.Component {
     onSubmit = e => {
         e.preventDefault();
         postJson('/api/auth/signin', this.state.fields)
-            .then(res => this.props.login({ email: res.user.email, token: res.token }))
+            .then(this.props.login)
             .catch(({ message }) => this.setState({ flash: message }));
     };
 
