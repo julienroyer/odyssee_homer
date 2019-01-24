@@ -5,7 +5,7 @@ import { postJson } from '../helpers/fetch';
 export default class Signup extends React.Component {
     state = { fields: {} };
 
-    onChange = e => (t => this.setState({ fields: { ...this.state.fields, [t.name]: t.value.trim() } }))(e.target);
+    onChange = e => (t => this.setState({ fields: { ...this.state.fields, [t.name]: t.value } }))(e.target);
 
     onSubmit = e => {
         e.preventDefault();
