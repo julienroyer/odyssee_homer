@@ -4,6 +4,8 @@ import { logout } from '../actions/auth';
 import { get } from '../helpers/fetch';
 
 class Profile extends React.Component {
+    state = { profile: {} };
+
     componentDidMount() {
         const { user } = this.props;
         get(`/api/user/${encodeURIComponent(user.email)}/profile`, user.token)
@@ -14,7 +16,7 @@ class Profile extends React.Component {
     logout = () => this.props.logout();
 
     render() {
-        const { email } = this.props.user, { flash, profile = {} } = this.state;
+        const { email } = this.props.user, { flash, profile } = this.state;
         return <>
             <button onClick={this.logout}>Log out</button>
             <h1>Profile</h1>
