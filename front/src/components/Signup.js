@@ -31,8 +31,8 @@ export default class Signup extends React.Component {
                 <p><label>Email<br /><input name="email" type="email" autoComplete="username" required /></label></p>
                 <p><label>Password<br /><input name="password" type="password" autoComplete="new-password" required /></label></p>
                 <p><label>Password bis<br /><input name="passwordbis" type="password" autoComplete="new-password" required /></label></p>
-                <p><label>Name<br /><input name="name" required onChange={this.onChange} /></label></p>
-                <p><label>Last name<br /><input name="lastname" required onChange={this.onChange} /></label></p>
+                <p><label>Name<br /><input name="name" required /></label></p>
+                <p><label>Last name<br /><input name="lastname" required /></label></p>
                 <p><input type="submit" value="Submit" /></p>
             </form>
         </>;
