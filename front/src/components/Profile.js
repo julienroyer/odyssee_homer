@@ -6,7 +6,7 @@ import { get } from '../helpers/fetch';
 class Profile extends React.Component {
     componentDidMount() {
         const { user } = this.props;
-        get(`/api/user/${user.email}/profile`, user.token)
+        get(`/api/user/${encodeURIComponent(user.email)}/profile`, user.token)
             .then(profile => this.setState({ profile }))
             .catch(({ message }) => this.setState({ flash: message }));
     }
