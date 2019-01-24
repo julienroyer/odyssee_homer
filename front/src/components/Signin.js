@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { login } from '../actions/auth';
-import myFetch from '../helpers/fetch';
+import { postJson } from '../helpers/fetch';
 
 class Signin extends React.Component {
     state = { fields: {} };
@@ -11,17 +11,9 @@ class Signin extends React.Component {
 
     onSubmit = e => {
         e.preventDefault();
-        const { fields } = this.state;
-        myFetch('/api/auth/signin',
-            {
-                method: 'POST',
-                headers: new Headers({
-                    'Content-Type': 'application/json',
-                }),
-                body: JSON.stringify(fields),
-            }
-        ).then(res => this.props.login({ email: res.user.email, token: res.token })
-        ).catch(({ message }) => this.setState({ flash: message }));
+        postJson('/api/auth/signin', this.state.fields)
+            .then(res => this.props.login({ email: res.user.email, token: res.token }))
+            .catch(({ message }) => this.setState({ flash: message }));
     };
 
     render() {

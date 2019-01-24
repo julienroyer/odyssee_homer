@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import myFetch from '../helpers/fetch';
+import { postJson } from '../helpers/fetch';
 
 export default class Signup extends React.Component {
     state = { fields: {} };
@@ -13,16 +13,9 @@ export default class Signup extends React.Component {
         if (passwordbis !== fields.password) {
             this.setState({ flash: `'Password' and 'Password bis' must be the same.` })
         } else {
-            myFetch('/api/auth/signup',
-                {
-                    method: 'POST',
-                    headers: new Headers({
-                        'Content-Type': 'application/json',
-                    }),
-                    body: JSON.stringify(fields),
-                }
-            ).then(() => this.props.history.push('/')
-            ).catch(({ message }) => this.setState({ flash: message }));
+            postJson('/api/auth/signup', fields)
+                .then(() => this.props.history.push('/'))
+                .catch(({ message }) => this.setState({ flash: message }));
         }
     };
 

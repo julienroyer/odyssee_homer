@@ -1,20 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { logout } from '../actions/auth';
-import myFetch from '../helpers/fetch';
+import { get } from '../helpers/fetch';
 
 class Profile extends React.Component {
     state = { profile: {} };
 
     componentDidMount() {
-        myFetch(`/api/user/${this.props.user.email}/profile`,
-            {
-                headers: new Headers({
-                    Authorization: `Bearer ${this.props.user.token}`,
-                })
-            }
-        ).then(profile => this.setState({ profile })
-        ).catch(({ message }) => this.setState({ flash: message }));
+        get(`/api/user/${this.props.user.email}/profile`, this.props.user.token)
+            .then(profile => this.setState({ profile }))
+            .catch(({ message }) => this.setState({ flash: message }));
     }
 
     logout = () => this.props.logout();
