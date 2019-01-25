@@ -26,7 +26,7 @@ class Signin extends React.Component {
             <form onSubmit={this.onSubmit} onChange={this.onChange}>
                 <h1>Sign in: {JSON.stringify(fields, undefined, 1)}</h1>
 
-                <p>{flash ? <mark>{flash}</mark> : loading ? 'Loading…' : '.'}</p>
+                <p>{flash ? <mark>{flash}</mark> : loading ? <i>Loading…</i> : '.'}</p>
 
                 <p><label>Email<br /><input name="email" type="email" autoComplete="username" required /></label></p>
                 <p><label>Password<br /><input name="password" type="password" autoComplete="current-password" required /></label></p>
