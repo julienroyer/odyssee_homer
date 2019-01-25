@@ -5,7 +5,7 @@ const tryJson = async res => {
     }
 }
 
-const wrapFetch = async (...args) => {
+const fetchJson = async (...args) => {
     const res = await fetch(...args);
     const json = await tryJson(res);
     if (!res.ok || !json) {
@@ -14,16 +14,16 @@ const wrapFetch = async (...args) => {
     return json;
 };
 
-const headers = ({ def, token }) => new Headers(Object.assign(
-    {}, def, token ? { Authorization: `Bearer ${token}` } : null
+const headers = ({ def, token } = {}) => new Headers(Object.assign(
+    {}, def || {}, token ? { Authorization: `Bearer ${token}` } : {}
 ));
 
-export const postJson = (url, json, token) => wrapFetch(url, {
+export const postJson = (url, json, token) => fetchJson(url, {
     method: 'POST',
     headers: headers({ def: { 'Content-Type': 'application/json' }, token }),
     body: JSON.stringify(json),
 });
 
-export const get = (url, token) => wrapFetch(url, {
+export const getJson = (url, token) => fetchJson(url, {
     headers: headers({ token }),
 });

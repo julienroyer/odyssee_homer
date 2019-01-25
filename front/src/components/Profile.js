@@ -1,14 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { logout } from '../actions/auth';
-import { get } from '../helpers/fetch';
+import { getJson } from '../helpers/fetch';
 
 class Profile extends React.Component {
     state = { profile: {} };
 
     componentDidMount() {
         const { user } = this.props;
-        get(`/api/user/${encodeURIComponent(user.email)}/profile`, user.token)
+        getJson(`/api/user/${encodeURIComponent(user.email)}/profile`, user.token)
             .then(profile => this.setState({ profile }))
             .catch(({ message }) => this.setState({ flash: message }));
     }
@@ -20,14 +20,14 @@ class Profile extends React.Component {
         return <>
             <button onClick={this.logout}>Log out</button>
             <h1>Profile</h1>
-            {Boolean(flash) && <p><mark>{flash}</mark></p>}
+            <p>{flash ? <mark>{flash}</mark> : <i>Loading…</i>}</p>
             <dl>
                 <dt>Email</dt>
                 <dd>{email}</dd>
                 <dt>Name</dt>
-                <dd>{profile.name || <i>Loading…</i>}</dd>
+                <dd>{profile.name || <i>…</i>}</dd>
                 <dt>Last name</dt>
-                <dd>{profile.lastname || <i>Loading…</i>}</dd>
+                <dd>{profile.lastname || <i>…</i>}</dd>
             </dl>
         </>;
     }
