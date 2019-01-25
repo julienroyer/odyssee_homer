@@ -9,18 +9,21 @@ export default class Signup extends React.Component {
 
     onSubmit = e => {
         e.preventDefault();
-        const { passwordbis, ...fields } = this.state.fields;
-        if (passwordbis !== fields.password) {
-            this.setState({ flash: `'Password' and 'Password bis' must be the same.` })
-        } else {
-            postJson('/api/auth/signup', fields)
-                .then(() => this.props.history.push('/'))
-                .catch(({ message }) => this.setState({ flash: message }));
+        if (!this.state.loading) {
+            const { passwordbis, ...fields } = this.state.fields;
+            if (passwordbis !== fields.password) {
+                this.setState({ flash: `'Password' and 'Password bis' must be the same.` });
+            } else {
+                this.setState({ flash: undefined, loading: true });
+                postJson('/api/auth/signup', fields)
+                    .then(() => this.props.history.push('/'))
+                    .catch(({ message }) => this.setState({ flash: message, loading: false }));
+            }
         }
     };
 
     render() {
-        const { flash, fields } = this.state;
+        const { flash, fields, loading } = this.state;
         return <>
             <p><Link to="/signin">Sign in</Link></p>
             <form onSubmit={this.onSubmit} onChange={this.onChange}>
@@ -33,7 +36,7 @@ export default class Signup extends React.Component {
                 <p><label>Password bis<br /><input name="passwordbis" type="password" autoComplete="new-password" required /></label></p>
                 <p><label>Name<br /><input name="name" required /></label></p>
                 <p><label>Last name<br /><input name="lastname" required /></label></p>
-                <p><input type="submit" value="Submit" /></p>
+                <p><input type="submit" value="Submit" disabled={loading === true} /></p>
             </form>
         </>;
     }
