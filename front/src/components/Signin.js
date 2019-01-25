@@ -11,19 +11,22 @@ class Signin extends React.Component {
 
     onSubmit = e => {
         e.preventDefault();
-        postJson('/api/auth/signin', this.state.fields)
-            .then(this.props.login)
-            .catch(({ message }) => this.setState({ flash: message }));
+        if (!this.state.loading) {
+            this.setState({ flash: undefined, loading: true });
+            postJson('/api/auth/signin', this.state.fields)
+                .then(this.props.login)
+                .catch(({ message }) => this.setState({ flash: message, loading: false }));
+        }
     };
 
     render() {
-        const { flash, fields } = this.state;
+        const { flash, fields, loading } = this.state;
         return <>
             <p><Link to="/signup">Sign up</Link></p>
             <form onSubmit={this.onSubmit} onChange={this.onChange}>
                 <h1>Sign in: {JSON.stringify(fields, undefined, 1)}</h1>
 
-                {Boolean(flash) && <p><mark>{flash}</mark></p>}
+                <p>{flash ? <mark>{flash}</mark> : loading ? 'Loading…' : '.'}</p>
 
                 <p><label>Email<br /><input name="email" type="email" autoComplete="username" required /></label></p>
                 <p><label>Password<br /><input name="password" type="password" autoComplete="current-password" required /></label></p>
