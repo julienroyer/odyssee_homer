@@ -20,7 +20,7 @@ class Profile extends React.Component {
         return <>
             <button onClick={this.logout}>Log out</button>
             <h1>Profile</h1>
-            <p>{flash ? <mark>{flash}</mark> : <i>Loading…</i>}</p>
+            <p>{flash ? <mark>{flash}</mark> : profile.name ? '.' : <i>Loading…</i>}</p>
             <dl>
                 <dt>Email</dt>
                 <dd>{email}</dd>
