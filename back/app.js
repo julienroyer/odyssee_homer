@@ -2,7 +2,6 @@
 
 const express = require('express');
 const morgan = require('morgan');
-const bodyParser = require('body-parser');
 const configurePassport = require('./auth/passport/configure');
 const routes = require('./routes');
 
@@ -11,7 +10,7 @@ configurePassport();
 const app = express();
 
 app.use(morgan('dev'));
-app.use(bodyParser.json());
+app.use(express.json());
 
 routes(app);
 
