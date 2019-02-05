@@ -29,6 +29,7 @@ module.exports = () => express.Router()
         res.json({ message: 'You have signed up!' });
     }))
     .post('/signin', localAuth, asyncMw(async (_req, res) => {
-        const token = await jwt.awaitableSign(res.locals.user, jwtSecretOrKey, { expiresIn: '1h' });
-        res.json({ ...res.locals.user, token });
+        const user = res.locals.user;
+        const token = await jwt.awaitableSign(user, jwtSecretOrKey, { expiresIn: '1h' });
+        res.json({ ...user, token });
     }));

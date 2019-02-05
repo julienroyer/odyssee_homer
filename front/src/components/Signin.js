@@ -30,7 +30,7 @@ class Signin extends React.Component {
 
                 <p><label>Email<br /><input name="email" type="email" autoComplete="username" required /></label></p>
                 <p><label>Password<br /><input name="password" type="password" autoComplete="current-password" required /></label></p>
-                <p><input type="submit" value="Submit" /></p>
+                <p><input type="submit" value="Submit" disabled={loading === true} /></p>
             </form>
         </>;
     }

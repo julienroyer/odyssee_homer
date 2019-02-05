@@ -11,8 +11,7 @@ const awaitableProxyHandler = {
         if (prop.length <= awaitablePrefix.length || !(prop.startsWith(awaitablePrefix)) || prop in obj) {
             return obj[prop];
         }
-        prop = prop.substring(awaitablePrefix.length);
-        prop = prop[0].toLowerCase() + prop.substring(1);
+        prop = prop[awaitablePrefix.length].toLowerCase() + prop.substring(awaitablePrefix.length + 1);
         return prop in obj ? promisify(obj[prop]) : undefined;
     }
 };
