@@ -3,7 +3,7 @@
 const mysql = require('mysql');
 const { awaitable } = require('../async-wrappers');
 
-module.exports = exports = awaitable(mysql.createPool({
+module.exports = awaitable(mysql.createPool({
     host: 'localhost',
     user: 'julien',
     password: 'marcelmarcel',

@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt');
 const dbPool = require('../../../helpers/db/pool');
 const { asyncMw } = require('../../../helpers/async-wrappers');
 
-module.exports = exports =
+module.exports =
     new LocalStrategy({ usernameField: 'email', session: false }, asyncMw(async (email, password, done) => {
         email = email.trim();
         password = password.trim();

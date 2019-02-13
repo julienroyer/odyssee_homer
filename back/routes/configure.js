@@ -4,7 +4,7 @@ const authRouter = require('../auth/router');
 const userRouter = require('../user/router');
 const errors = require('../helpers/errors');
 
-module.exports = exports = app => {
+module.exports = app => {
     app.use('/api/auth', authRouter());
     app.use('/api/user', userRouter());
 
