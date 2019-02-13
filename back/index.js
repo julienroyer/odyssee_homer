@@ -10,6 +10,7 @@ configurePassport();
 const app = express();
 app.use(morgan('dev'));
 app.use(express.json());
+
 configureRoutes(app);
 
 const server = app.listen(process.env.PORT || 5000, () => {
