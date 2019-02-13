@@ -16,18 +16,22 @@ class Profile extends React.Component {
     logout = () => this.props.logout();
 
     render() {
-        const { email } = this.props.user, { flash, profile } = this.state;
+        const { email } = this.props.user;
+        const { flash, profile: {
+            name = <i>…</i>,
+            lastname = <i>…</i>,
+        } } = this.state;
         return <>
             <button onClick={this.logout}>Log out</button>
             <h1>Profile</h1>
-            <p>{flash ? <mark>{flash}</mark> : profile.name ? '.' : <i>Loading…</i>}</p>
+            <p>{flash ? <mark>{flash}</mark> : name ? '.' : <i>Loading…</i>}</p>
             <dl>
                 <dt>Email</dt>
                 <dd>{email}</dd>
                 <dt>Name</dt>
-                <dd>{profile.name || <i>…</i>}</dd>
+                <dd>{name}</dd>
                 <dt>Last name</dt>
-                <dd>{profile.lastname || <i>…</i>}</dd>
+                <dd>{lastname}</dd>
             </dl>
         </>;
     }
