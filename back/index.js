@@ -14,5 +14,5 @@ app.use(express.json());
 configureRoutes(app);
 
 const server = app.listen(process.env.PORT || 5000, () => {
-    console.log(`Listening on port ${server.address().port}`);
+    console.log(`\x1b[0;1;32mListening on port ${server.address().port}\x1b[m`);
 });
