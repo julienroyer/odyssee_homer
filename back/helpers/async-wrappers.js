@@ -13,7 +13,7 @@ const awaitableProxyHandler = {
         }
         prop = prop[awaitablePrefix.length].toLowerCase() + prop.substring(awaitablePrefix.length + 1);
         return prop in obj ? promisify(obj[prop]) : undefined;
-    }
+    },
 };
 
 exports.awaitable = obj => new Proxy(obj, awaitableProxyHandler);
