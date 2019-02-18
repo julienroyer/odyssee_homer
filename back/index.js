@@ -9,7 +9,6 @@ configurePassport();
 
 const app = express();
 app.disable('x-powered-by');
-app.disable('etag');
 
 app.use(morgan('dev'));
 app.use(express.json());
