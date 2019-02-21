@@ -15,7 +15,7 @@ const fetchJson = async (...args) => {
 };
 
 const headers = ({ def, token } = {}) => new Headers(Object.assign(
-    {}, def || {}, token ? { Authorization: `Bearer ${token}` } : {}
+    {}, def, token && { Authorization: `Bearer ${token}` }
 ));
 
 export const postJson = (url, json, token) => fetchJson(url, {
